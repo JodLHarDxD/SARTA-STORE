@@ -1,0 +1,137 @@
+.pdp__crumb {
+  padding: 24px 0;
+  font-size: 13px;
+  color: var(--muted);
+  display: flex;
+  gap: 8px;
+}
+
+.pdp__layout {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 64px;
+  padding-bottom: 80px;
+}
+
+.pdp__main-img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  background: #e8e2db;
+}
+
+.pdp__thumbs {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.pdp__thumbs button {
+  flex: 0 0 72px;
+  padding: 0;
+  border: 2px solid transparent;
+  overflow: hidden;
+}
+
+.pdp__thumbs button.is-active {
+  border-color: var(--ink);
+}
+
+.pdp__thumbs img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+}
+
+.pdp__tag {
+  display: inline-block;
+  margin-bottom: 12px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.pdp__title {
+  margin: 0 0 12px;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.pdp__price {
+  margin: 0 0 20px;
+  font-size: 1.25rem;
+}
+
+.pdp__desc {
+  margin: 0 0 28px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.pdp__option {
+  margin-bottom: 24px;
+}
+
+.pdp__swatches,
+.pdp__sizes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.pdp__swatches button,
+.pdp__sizes button {
+  min-width: 48px;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 13px;
+  background: #fff;
+}
+
+.pdp__swatches button.is-active,
+.pdp__sizes button.is-active {
+  background: var(--ink);
+  color: var(--cream);
+  border-color: var(--ink);
+}
+
+.pdp__add {
+  width: 100%;
+  margin-bottom: 28px;
+}
+
+.pdp__details {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--muted);
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.pdp__related {
+  padding-bottom: 100px;
+}
+
+.pdp__related h2 {
+  margin: 0 0 32px;
+  font-size: 2.5rem;
+}
+
+.pdp__related-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 900px) {
+  .pdp__layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .pdp__related-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

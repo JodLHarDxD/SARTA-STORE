@@ -1,0 +1,130 @@
+.checkout {
+  padding-bottom: 100px;
+}
+
+.checkout__layout {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 64px;
+  align-items: start;
+}
+
+.checkout__title {
+  margin: 32px 0 40px;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.checkout__form fieldset {
+  border: none;
+  margin: 0 0 32px;
+  padding: 0;
+}
+
+.checkout__form legend {
+  margin-bottom: 12px;
+}
+
+.checkout__form input {
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.checkout__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.checkout__demo {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0;
+}
+
+.checkout__submit {
+  width: 100%;
+}
+
+.checkout__summary {
+  position: sticky;
+  top: calc(var(--header-h) + 24px);
+  padding: 28px;
+  background: #fff;
+  border: 1px solid var(--line);
+}
+
+.checkout__summary h2 {
+  margin: 0 0 20px;
+  font-size: 1rem;
+}
+
+.checkout__summary ul {
+  list-style: none;
+  margin: 0 0 24px;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+}
+
+.checkout__summary li {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  gap: 12px;
+  align-items: center;
+  font-size: 14px;
+}
+
+.checkout__summary li img {
+  width: 56px;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+}
+
+.checkout__summary li p {
+  margin: 0 0 4px;
+  font-weight: 500;
+}
+
+.checkout__summary li span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.checkout__totals div {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.checkout__total {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  font-size: 1.1rem;
+}
+
+.checkout--success {
+  padding: 120px 0;
+  text-align: center;
+}
+
+.checkout--success p {
+  color: var(--muted);
+  margin-bottom: 32px;
+}
+
+@media (max-width: 900px) {
+  .checkout__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .checkout__summary {
+    position: static;
+    order: -1;
+  }
+}
