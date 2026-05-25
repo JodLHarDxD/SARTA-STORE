@@ -1,0 +1,120 @@
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  mix-blend-mode: difference; /* Inverts colours beneath cursor for a dramatic modern look */
+  will-change: transform;
+}
+
+.custom-cursor__circle {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border: 1px solid #f5f3ef;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    width 0.4s cubic-bezier(0.19, 1, 0.22, 1),
+    height 0.4s cubic-bezier(0.19, 1, 0.22, 1),
+    border-color 0.4s cubic-bezier(0.19, 1, 0.22, 1),
+    background-color 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  box-sizing: border-box;
+}
+
+.custom-cursor__dot {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background-color: var(--accent);
+  border-radius: 50%;
+  transition: transform 0.3s var(--ease-out), opacity 0.3s var(--ease-out);
+}
+
+.custom-cursor__label {
+  font-size: 8px;
+  font-family: var(--sans);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: #080808; /* Inverse text color when outer expanded background is white */
+  opacity: 0;
+  transform: scale(0.6);
+  transition:
+    opacity 0.3s cubic-bezier(0.19, 1, 0.22, 1),
+    transform 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* ─── STATES ────────────────────────────────────────────────────────────────── */
+
+/* Hover Link state: cursor contracts on standard active links */
+.custom-cursor--hover .custom-cursor__circle {
+  width: 48px;
+  height: 48px;
+  border-color: var(--accent);
+}
+
+.custom-cursor--hover .custom-cursor__dot {
+  transform: scale(0);
+  opacity: 0;
+}
+
+/* Drag State: large circle for horizontal scrolling galleries */
+.custom-cursor--drag .custom-cursor__circle {
+  width: 72px;
+  height: 72px;
+  background-color: #f5f3ef;
+  border-color: #f5f3ef;
+}
+
+.custom-cursor--drag .custom-cursor__dot {
+  transform: scale(0);
+  opacity: 0;
+}
+
+.custom-cursor--drag .custom-cursor__label {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* View State: medium circle for portfolio and product grids */
+.custom-cursor--view .custom-cursor__circle {
+  width: 64px;
+  height: 64px;
+  background-color: var(--accent);
+  border-color: var(--accent);
+}
+
+.custom-cursor--view .custom-cursor__dot {
+  transform: scale(0);
+  opacity: 0;
+}
+
+.custom-cursor--view .custom-cursor__label {
+  opacity: 1;
+  transform: scale(1);
+  color: #080808;
+}
+
+/* Sound State: medium glowing accent for sound control toggles */
+.custom-cursor--sound .custom-cursor__circle {
+  width: 56px;
+  height: 56px;
+  background-color: #f5f3ef;
+  border-color: #f5f3ef;
+}
+
+.custom-cursor--sound .custom-cursor__dot {
+  transform: scale(0);
+  opacity: 0;
+}
+
+.custom-cursor--sound .custom-cursor__label {
+  opacity: 1;
+  transform: scale(1);
+}

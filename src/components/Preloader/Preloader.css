@@ -5,7 +5,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #000;
+  background: #080808; /* Luxury deep dark */
   clip-path: inset(0% 0% 0% 0%);
   contain: layout style paint;
 }
@@ -15,6 +15,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  height: 100%;
 }
 
 /* ─── STACKED IMAGE CARDS ─────────────────────────────────────────────── */
@@ -33,18 +35,18 @@
 
 .preloader__image {
   position: absolute;
-  /* Wider, less tall — more like a fashion card than a phone screenshot */
   width: min(38vw, 320px);
   aspect-ratio: 3 / 4;
   object-fit: cover;
   object-position: center top;
   will-change: transform;
-  border-radius: 2px;
+  border-radius: 0; /* Premium strict layout */
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 @media (min-width: 768px) {
   .preloader__image {
-    width: min(22vw, 260px);
+    width: min(20vw, 240px);
   }
 }
 
@@ -53,21 +55,24 @@
   position: relative;
   z-index: 10;
   overflow: hidden;
-  /* sits on top of the image stack — blend mode does the magic */
+  margin-bottom: 40px;
 }
 
 .preloader__wordmark {
   display: block;
-  font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
-  font-size: clamp(5rem, 20vw, 13rem);
-  font-weight: 300;
-  font-style: italic;
-  letter-spacing: 0.12em;
-  line-height: 1;
-  text-transform: uppercase;
+  font-family: "Bodoni Moda", "Bodoni 72", Didot, "Bodoni MT", Georgia, serif;
+  font-size: 5rem;
+  font-weight: 600;
+  font-style: normal;
+  font-variation-settings: "opsz" 96;
+  font-feature-settings: "kern" 1, "liga" 1;
+  letter-spacing: 0;
+  line-height: 0.82;
+  text-transform: lowercase;
   color: #fff;
-  /* Inverts: white text appears black over light image areas, stays white over dark */
   mix-blend-mode: difference;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
   user-select: none;
   white-space: nowrap;
 }
@@ -76,22 +81,95 @@
   visibility: hidden;
 }
 
-/* ─── COUNTER ─────────────────────────────────────────────────────────── */
-.preloader__counter-wrap {
+@media (min-width: 480px) {
+  .preloader__wordmark {
+    font-size: 7rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .preloader__wordmark {
+    font-size: 10rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .preloader__wordmark {
+    font-size: 12.5rem;
+  }
+}
+
+/* ─── INTERACTION & PERMISSION ─────────────────────────────────────────── */
+.preloader__interaction {
   position: fixed;
-  bottom: 2.5rem;
-  right: 2.5rem;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(520px, 90vw);
+  text-align: center;
+  z-index: 20;
+}
+
+.preloader__counter-wrap {
   overflow: hidden;
-  z-index: 11;
 }
 
 .preloader__counter {
   display: block;
-  font-family: 'Inter', monospace;
-  font-size: clamp(0.9rem, 1.5vw, 1.2rem);
-  font-weight: 400;
-  letter-spacing: 0.1em;
-  color: rgba(255, 255, 255, 0.55);
+  font-family: var(--serif);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  color: var(--accent);
   font-variant-numeric: tabular-nums;
-  text-align: right;
+  text-align: center;
+}
+
+.preloader__choice-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  animation: ChoiceFadeUp 1s var(--ease-out) both;
+}
+
+@keyframes ChoiceFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.preloader__choice-eyebrow {
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+  margin: 0;
+}
+
+.preloader__choice-title {
+  font-family: var(--serif);
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+  font-weight: 400;
+  color: #f5f3ef;
+  line-height: 1.35;
+  margin: 0;
+  text-transform: lowercase;
+}
+
+.preloader__choice-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 10px;
+}
+
+.preloader__choice-actions .btn {
+  min-height: 44px;
+  padding: 0 24px;
 }

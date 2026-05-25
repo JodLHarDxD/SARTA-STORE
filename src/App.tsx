@@ -6,6 +6,7 @@ import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { CartDrawer } from "./components/CartDrawer";
 import { Preloader } from "./components/Preloader/Preloader";
+import { CustomCursor } from "./components/CustomCursor";
 import { Home } from "./pages/Home";
 import { Shop } from "./pages/Shop";
 import { ProductPage } from "./pages/ProductPage";
@@ -20,7 +21,7 @@ export default function App() {
     if (showPreloader) return;
 
     const lenis = new Lenis({
-      duration: 1.1,
+      duration: 1.2,
       smoothWheel: true,
     });
 
@@ -44,7 +45,14 @@ export default function App() {
   return (
     <CartProvider>
       <BrowserRouter>
+        {/* Animated dynamic noise film grain overlay across the entire SARTA showcase */}
+        <div className="noise-overlay" />
+        
         {showPreloader && <Preloader onComplete={handlePreloaderComplete} />}
+        
+        {/* Fluid Inertial Custom Mouse Cursor */}
+        <CustomCursor />
+        
         <Header />
         <CartDrawer />
         <Routes>
@@ -60,3 +68,4 @@ export default function App() {
     </CartProvider>
   );
 }
+

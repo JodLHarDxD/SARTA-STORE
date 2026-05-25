@@ -1,214 +1,491 @@
-.hero {
+/* ─── TALES OF SARTA CINEMATIC HERO ─────────────────────────────────── */
+.tales-hero {
   position: relative;
-  min-height: calc(100vh - var(--header-h));
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: end;
-  padding-bottom: 48px;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--bg-dark);
   overflow: hidden;
 }
 
-.hero__content {
-  padding: 80px 0 48px;
-}
-
-.hero__title {
-  margin: 16px 0 24px;
-  font-size: clamp(3rem, 8vw, 6.5rem);
-}
-
-.hero__lede {
-  max-width: 42ch;
-  margin: 0 0 32px;
-  font-size: 1.05rem;
-  color: var(--muted);
-  line-height: 1.7;
-}
-
-.hero__actions {
+.tales-hero__track {
   display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.hero__visual {
-  position: relative;
-  height: min(85vh, 900px);
-  margin-right: -48px;
-}
-
-.hero__img {
-  position: absolute;
-  object-fit: cover;
-}
-
-.hero__img--main {
-  inset: 0 0 0 12%;
-  width: 88%;
+  width: 100%;
   height: 100%;
 }
 
-.hero__img--float {
-  width: 42%;
-  aspect-ratio: 3 / 4;
-  left: 0;
-  bottom: 10%;
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.18);
+.tale-card {
+  position: relative;
+  flex: 1;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 1px solid rgba(255, 255, 255, 0.04);
+  transition:
+    flex 0.85s cubic-bezier(0.25, 1, 0.2, 1),
+    opacity 0.85s cubic-bezier(0.25, 1, 0.2, 1),
+    filter 0.85s cubic-bezier(0.25, 1, 0.2, 1);
+  will-change: flex, opacity;
 }
 
-.hero__scroll {
+.tale-card:last-child {
+  border-right: none;
+}
+
+/* Hover Expanding states */
+.tale-card.is-active {
+  flex: 1.8;
+}
+
+.tale-card.is-dimmed {
+  flex: 0.65;
+  opacity: 0.35;
+  filter: grayscale(40%) blur(1px);
+}
+
+/* Card Background Media */
+.tale-card__media {
   position: absolute;
-  left: 24px;
-  bottom: 32px;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  transform: scale(1.01);
+}
+
+.tale-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transition: transform 1.2s cubic-bezier(0.25, 1, 0.2, 1);
+}
+
+.tale-card__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  opacity: 0;
+  pointer-events: none;
+  mix-blend-mode: normal;
+  transition: opacity 1.2s cubic-bezier(0.25, 1, 0.2, 1);
+}
+
+/* Fade in looping video on hover */
+.tale-card__video.is-visible {
+  opacity: 0.85;
+}
+
+.tale-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(8, 8, 8, 0.2) 0%,
+    rgba(8, 8, 8, 0.3) 50%,
+    rgba(8, 8, 8, 0.8) 100%
+  );
+  z-index: 2;
+}
+
+.tale-card:hover .tale-card__img {
+  transform: scale(1.05);
+}
+
+/* Card Foreground Content */
+.tale-card__content {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 100px 32px 64px;
+}
+
+.tale-card__header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 11px;
-  letter-spacing: 0.2em;
+  gap: 16px;
+}
+
+.tale-card__code {
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 300;
+  color: var(--accent);
+}
+
+.tale-card__eyebrow {
+  font-size: 9px;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
+  color: rgba(245, 243, 239, 0.6);
+  margin: 0;
+}
+
+.tale-card__body {
+  width: 100%;
+}
+
+.tale-card__title {
+  font-size: clamp(2rem, 5vw, 4.25rem);
+  color: #f5f3ef;
+  line-height: 0.95;
+  margin-bottom: 20px;
+  transition: transform 0.6s var(--ease-out);
+}
+
+.tale-card__expanded-content {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateY(16px);
+  transition:
+    max-height 0.85s cubic-bezier(0.25, 1, 0.2, 1),
+    opacity 0.85s cubic-bezier(0.25, 1, 0.2, 1),
+    transform 0.85s cubic-bezier(0.25, 1, 0.2, 1);
+}
+
+/* Smooth slide open and fade in when expanded */
+.tale-card.is-active .tale-card__expanded-content {
+  max-height: 250px;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tale-card__desc {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: rgba(245, 243, 239, 0.7);
+  max-width: 40ch;
+  margin: 0 0 24px;
+}
+
+.tale-card__btn {
+  min-height: 40px;
+  padding: 0 24px;
+}
+
+/* ─── BRAND PROLOGUE ──────────────────────────────────────────────── */
+.brand-prologue {
+  padding: 120px 0 100px;
+}
+
+.prologue-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 64px;
+  align-items: start;
+}
+
+.prologue-title {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  line-height: 0.95;
+  margin: 0;
+}
+
+.prologue-right {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.prologue-text {
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  line-height: 1.7;
   color: var(--muted);
+  margin: 0;
+  font-weight: 300;
 }
 
-.hero__scroll-line {
-  width: 48px;
-  height: 1px;
-  background: var(--ink);
-  animation: scroll-pulse 2s ease-in-out infinite;
+.prologue-actions {
+  display: flex;
+  gap: 16px;
 }
 
-@keyframes scroll-pulse {
-  0%,
-  100% {
-    transform: scaleX(0.4);
-    opacity: 0.4;
-  }
-  50% {
-    transform: scaleX(1);
-    opacity: 1;
-  }
-}
-
+/* ─── DYNAMIC TYPOGRAPHY TAPE ─────────────────────────────────────── */
 .marquee {
   border-block: 1px solid var(--line);
-  padding: 18px 0;
+  padding: 24px 0;
   overflow: hidden;
-  background: var(--ink);
-  color: var(--cream);
+  background: var(--bg-dark);
+  color: var(--accent);
 }
 
 .marquee__track {
   display: flex;
-  gap: 48px;
+  gap: 64px;
   width: max-content;
-  animation: marquee 28s linear infinite;
+  animation: marquee 32s linear infinite;
 }
 
 .marquee__track span {
-  font-size: 13px;
-  letter-spacing: 0.22em;
+  font-family: var(--serif);
+  font-size: 12px;
+  letter-spacing: 0.35em;
   text-transform: uppercase;
   white-space: nowrap;
+  font-weight: 300;
 }
 
 @keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
 
-.upload-zone {
-  display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
-  gap: 48px;
-  padding: 100px 0;
-  align-items: start;
+/* explore rail */
+.explore-rail-wrap {
+  position: relative;
+  background-color: var(--bg-dark);
 }
 
-.upload-zone__title {
+/* ─── ASYMMETRICAL EDITORIAL ARCHIVE ───────────────────────────────── */
+.lookbook-section {
+  padding: 120px 0 100px;
+  background-color: var(--bg);
+}
+
+.lookbook-head {
+  text-align: center;
+  max-width: 720px;
+  margin-bottom: 64px;
+}
+
+.lookbook-title {
+  font-size: clamp(2.2rem, 5vw, 4rem);
   margin: 12px 0 20px;
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.0;
 }
 
-.upload-zone__copy p:last-child {
-  color: var(--muted);
+.lookbook-subtitle {
+  font-size: 14px;
   line-height: 1.7;
-  max-width: 40ch;
+  color: var(--muted);
+  max-width: 50ch;
+  margin-inline: auto;
 }
 
-.upload-zone__grid {
+.lookbook-filters {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 64px;
+  flex-wrap: wrap;
+}
+
+.lookbook-filter-btn {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  padding: 10px 24px;
+  border-radius: 0;
+  background: transparent;
+  transition:
+    color 0.4s var(--ease-out),
+    border-color 0.4s var(--ease-out),
+    background-color 0.4s var(--ease-out);
+}
+
+.lookbook-filter-btn:hover,
+.lookbook-filter-btn.is-active {
+  color: var(--accent);
+  border-color: var(--accent);
+  background-color: rgba(255, 255, 255, 0.01);
+}
+
+/* Alternating Asymmetrical Lookbook Grid */
+.lookbook-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 40px 24px;
 }
 
-.upload-zone__cell {
+.lookbook-card {
+  grid-column: span 12;
+  position: relative;
   overflow: hidden;
-  aspect-ratio: 3 / 4;
-  animation: fade-up 0.8s var(--ease-out) both;
+  transition: transform 0.6s var(--ease-out);
+  will-change: transform;
 }
 
-.upload-zone__cell img {
+/* Dynamic Alternating Margins and Offsets to Create Floating Sensory Parallax */
+@media (min-width: 768px) {
+  /* Wide aspect cards span 8 columns, nested in center */
+  .lookbook-card--landscape {
+    grid-column: span 8;
+  }
+  
+  /* Portrait aspect cards span 4 columns */
+  .lookbook-card--portrait {
+    grid-column: span 4;
+  }
+  
+  /* Square aspect cards span 4 columns */
+  .lookbook-card--square {
+    grid-column: span 4;
+  }
+
+  /* Indent and shift items dynamically based on index */
+  .lookbook-card--index-0 { grid-column: span 8; }
+  .lookbook-card--index-1 { grid-column: span 4; margin-top: 80px; }
+  .lookbook-card--index-2 { grid-column: span 4; transform: translateY(-40px); }
+  .lookbook-card--index-3 { grid-column: span 4; margin-top: -20px; }
+  .lookbook-card--index-4 { grid-column: span 4; transform: translateY(60px); }
+  .lookbook-card--index-5 { grid-column: span 8; margin-top: 40px; }
+  .lookbook-card--index-6 { grid-column: span 4; transform: translateY(-30px); }
+  .lookbook-card--index-7 { grid-column: span 4; }
+  .lookbook-card--index-8 { grid-column: span 4; margin-top: 80px; }
+  .lookbook-card--index-9 { grid-column: span 8; }
+  .lookbook-card--index-10 { grid-column: span 4; transform: translateY(-80px); }
+  .lookbook-card--index-11 { grid-column: span 4; }
+}
+
+.lookbook-media-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: var(--aspect-ratio, 3/4);
+  overflow: hidden;
+  background-color: var(--cream);
+  border: 1px solid var(--line);
+}
+
+.lookbook-card--landscape .lookbook-media-wrap {
+  --aspect-ratio: 16 / 9;
+}
+
+.lookbook-card--portrait .lookbook-media-wrap {
+  --aspect-ratio: 3 / 4.5;
+}
+
+.lookbook-card--square .lookbook-media-wrap {
+  --aspect-ratio: 1 / 1;
+}
+
+.lookbook-img,
+.lookbook-video {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center top;
+  transition: transform 1.2s var(--ease-out);
+}
+
+.lookbook-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(8, 8, 8, 0.95) 0%, rgba(8, 8, 8, 0.4) 50%, transparent 100%);
+  opacity: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: 28px;
+  transition: opacity 0.6s var(--ease-out);
+  z-index: 2;
+}
+
+.lookbook-card:hover .lookbook-overlay {
+  opacity: 1;
+}
+
+.lookbook-card:hover .lookbook-img,
+.lookbook-card:hover .lookbook-video {
+  transform: scale(1.04);
+}
+
+.lookbook-info {
+  transform: translateY(16px);
   transition: transform 0.6s var(--ease-out);
 }
 
-.upload-zone__cell:hover img {
-  transform: scale(1.06);
+.lookbook-card:hover .lookbook-info {
+  transform: translateY(0);
 }
 
-@keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.lookbook-card-collection {
+  font-size: 8px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 8px;
 }
 
+.lookbook-card-title {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: #f5f3ef;
+  line-height: 1.2;
+  margin: 0 0 6px;
+  text-transform: lowercase;
+}
+
+.lookbook-card-subtitle {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 0;
+  font-weight: 300;
+}
+
+/* ─── NEW ARRIVALS FEATURED ────────────────────────────────────────────── */
 .featured {
-  padding-bottom: 100px;
+  padding: 120px 0 100px;
+  border-top: 1px solid var(--line);
 }
 
 .featured__head {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 32px;
+  margin-bottom: 48px;
 }
 
 .featured__title {
-  margin: 8px 0 0;
-  font-size: clamp(2rem, 5vw, 3.25rem);
+  margin: 12px 0 0;
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
 }
 
 .featured__link {
-  font-size: 12px;
-  letter-spacing: 0.12em;
+  font-size: 11px;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  text-decoration: underline;
+  color: var(--accent);
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 4px;
 }
 
 .featured__grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 24px 16px;
+  gap: 32px 20px;
 }
 
+.featured__card-wrap {
+  transition: transform 0.5s var(--ease-out);
+}
+
+.featured__card-wrap:hover {
+  transform: translateY(-4px);
+}
+
+/* ─── PROCESS STEPS ────────────────────────────────────────────────── */
 .steps {
-  padding: 80px 0 100px;
-  background: #ebe5de;
+  padding: 120px 0 100px;
+  background-color: var(--cream);
+  border-block: 1px solid var(--line);
 }
 
 .steps__title {
-  margin: 8px 0 48px;
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  margin: 12px 0 64px;
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
 }
 
 .steps__grid {
@@ -218,48 +495,68 @@
 }
 
 .steps__card {
-  padding: 28px;
+  padding: 40px 32px;
   background: var(--bg);
-  min-height: 220px;
+  min-height: 240px;
+  border: 1px solid var(--line);
+  transition:
+    border-color 0.4s var(--ease-out),
+    transform 0.4s var(--ease-out);
+}
+
+.steps__card:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
 }
 
 .steps__code {
-  font-size: 11px;
-  letter-spacing: 0.2em;
+  font-family: var(--serif);
+  font-size: 1.5rem;
   color: var(--accent);
+  display: block;
+  margin-bottom: 24px;
 }
 
 .steps__card h3 {
-  margin: 16px 0 12px;
-  font-size: 1.25rem;
+  margin: 0 0 12px;
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .steps__card p {
   margin: 0;
   color: var(--muted);
-  line-height: 1.6;
-  font-size: 14px;
+  line-height: 1.7;
+  font-size: 13px;
+  font-weight: 300;
 }
 
+/* ─── EDITORIAL BANNER ────────────────────────────────────────────── */
 .cta-banner {
-  padding: 100px 0;
-  background: var(--ink);
-  color: var(--cream);
+  padding: 140px 0;
+  background: var(--bg-dark);
+  color: #f5f3ef;
+  text-align: center;
 }
 
 .cta-banner__inner {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  gap: 32px;
+  gap: 40px;
 }
 
 .cta-banner h2 {
   margin: 0;
-  font-size: clamp(2rem, 5vw, 3.75rem);
-  max-width: 14ch;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  line-height: 0.95;
+  max-width: 15ch;
+  text-transform: uppercase;
 }
 
+/* ─── RESPONSIVE LAYOUTS ───────────────────────────────────────────── */
 @media (max-width: 1100px) {
   .featured__grid {
     grid-template-columns: repeat(2, 1fr);
@@ -271,33 +568,49 @@
 }
 
 @media (max-width: 900px) {
-  .hero {
-    grid-template-columns: 1fr;
-    min-height: auto;
+  .tales-hero {
+    height: auto;
   }
-
-  .hero__visual {
-    margin: 0;
-    height: 60vh;
-  }
-
-  .upload-zone {
-    grid-template-columns: 1fr;
-  }
-
-  .cta-banner__inner {
+  
+  .tales-hero__track {
     flex-direction: column;
-    align-items: flex-start;
+    height: auto;
+  }
+  
+  .tale-card {
+    height: 60vh;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  }
+
+  .tale-card.is-active {
+    flex: none;
+    height: 70vh;
+  }
+
+  .tale-card.is-dimmed {
+    flex: none;
+    height: 50vh;
+    opacity: 0.7;
+    filter: none;
+  }
+
+  .prologue-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
   }
 }
 
 @media (max-width: 600px) {
-  .featured__grid,
-  .upload-zone__grid {
+  .featured__grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
   .steps__grid {
     grid-template-columns: 1fr;
+  }
+  
+  .lookbook-grid {
+    gap: 24px;
   }
 }

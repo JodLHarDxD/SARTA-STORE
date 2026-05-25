@@ -1,48 +1,212 @@
 .about-hero {
-  padding-top: 48px;
+  padding-top: 60px;
 }
 
 .about-hero__title {
-  margin: 16px 0 48px;
-  font-size: clamp(2.5rem, 7vw, 5rem);
-  max-width: 14ch;
+  margin: 24px 0 64px;
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  line-height: 0.95;
+}
+
+.about-hero__banner {
+  position: relative;
+  width: 100vw;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  height: 60vh;
+  overflow: hidden;
+  border-block: 1px solid var(--line);
 }
 
 .about-hero__img {
   width: 100%;
-  max-height: 70vh;
+  height: 100%;
   object-fit: cover;
+  object-position: center 30%;
 }
 
-.about-copy {
-  padding: 80px 0 120px;
+.about-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(8, 8, 8, 0.4) 0%,
+    rgba(8, 8, 8, 0.7) 100%
+  );
 }
 
-.about-copy__grid {
+/* ─── MANIFEST QUOTE ──────────────────────────────────────────────── */
+.about-quote {
+  padding: 140px 0;
+  text-align: center;
+  border-bottom: 1px solid var(--line);
+}
+
+.quote-wrap {
+  position: relative;
+  max-width: 960px;
+  margin-inline: auto;
+}
+
+.quote-mark {
+  font-family: var(--serif);
+  font-size: 8rem;
+  color: var(--accent);
+  line-height: 0.1;
+  display: block;
+  height: 40px;
+  opacity: 0.3;
+}
+
+.brand-quote {
+  font-size: clamp(1.8rem, 4vw, 3.2rem);
+  line-height: 1.15;
+  color: #f5f3ef;
+  margin: 0 0 32px;
+  font-weight: 300;
+  text-transform: lowercase;
+}
+
+.quote-author {
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* ─── ASYMMETRICAL STORY BLOCKS ───────────────────────────────────── */
+.about-story {
+  padding: 140px 0 100px;
+}
+
+.story-block {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
-  margin-bottom: 48px;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 80px;
+  align-items: center;
+  margin-bottom: 140px;
 }
 
-.about-copy h2 {
-  margin: 0 0 20px;
-  font-size: 2rem;
+.story-block--reverse {
+  grid-template-columns: 0.9fr 1.1fr;
 }
 
-.about-copy p,
-.about-copy li {
-  color: var(--muted);
-  line-height: 1.7;
+.story-block--reverse .story-block__image {
+  order: 2;
 }
 
-.about-copy ul {
+.story-block__image {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+
+.story-block__image img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  transition: transform 1.2s var(--ease-out);
+}
+
+.story-block__image:hover img {
+  transform: scale(1.04);
+}
+
+.story-block__content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.story-block__title {
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  line-height: 1.0;
   margin: 0;
-  padding-left: 18px;
 }
 
-@media (max-width: 700px) {
-  .about-copy__grid {
+.story-block__text {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--muted);
+  font-weight: 300;
+  margin: 0;
+}
+
+/* ─── STATS SHOWCASE ──────────────────────────────────────────────── */
+.about-stats {
+  padding: 100px 0;
+  background-color: var(--cream);
+  border-block: 1px solid var(--line);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  text-align: center;
+}
+
+.stat-num {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  color: var(--accent);
+  display: block;
+  line-height: 1.0;
+  margin-bottom: 12px;
+}
+
+.stat-label {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0;
+  font-weight: 500;
+}
+
+/* ─── CTA BANNER ──────────────────────────────────────────────────── */
+.about-cta {
+  padding: 120px 0 140px;
+  text-align: center;
+}
+
+.about-cta__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  max-width: 640px;
+  margin-inline: auto;
+}
+
+.about-cta h2 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.0;
+  margin: 0;
+}
+
+/* ─── RESPONSIVE LAYOUTS ───────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .story-block {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    margin-bottom: 100px;
+  }
+  
+  .story-block--reverse .story-block__image {
+    order: 0;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .stats-grid {
     grid-template-columns: 1fr;
   }
 }

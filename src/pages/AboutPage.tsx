@@ -5,44 +5,106 @@ import "./AboutPage.css";
 export function AboutPage() {
   return (
     <div className="about page page-enter">
+      {/* ─── ABOUT HERO ──────────────────────────────────────────────────── */}
       <section className="about-hero">
         <div className="container">
-          <p className="eyebrow">About SARTA</p>
+          <p className="eyebrow">The Atelier Story</p>
           <h1 className="display about-hero__title">
-            Clothing for the in-between moments.
+            poetry in the <br />living materials.
           </h1>
         </div>
-        <img
-          src={images.curatedRetailBoutiqueRackWarm}
-          alt="SARTA showroom"
-          className="about-hero__img"
-        />
+        <div className="about-hero__banner">
+          <img
+            src={images.curatedHeroWomanUrbanSuit}
+            alt="SARTA suiting design"
+            className="about-hero__img"
+          />
+          <div className="about-hero__overlay" />
+        </div>
       </section>
 
-      <section className="container about-copy">
-        <div className="about-copy__grid">
-          <div>
-            <h2 className="display">Why we exist</h2>
-            <p>
-              SARTA blends editorial fashion with everyday wearability. We took
-              cues from campaign-first brands like Fourmula and tactile catalogs
-              like Palmer — then built a shop that feels as fast and clear as H&M,
-              with the restraint of a design studio store like OUTFIT®.
+      {/* ─── MANIFEST QUOTE ──────────────────────────────────────────────── */}
+      <section className="about-quote container">
+        <div className="quote-wrap">
+          <span className="quote-mark">“</span>
+          <blockquote className="display brand-quote">
+            we make clothes not just to be worn, but to be judged. and remembered. a quiet canvas for the everyday ritual.
+          </blockquote>
+          <p className="quote-author">— sarta creative manifest, ss26</p>
+        </div>
+      </section>
+
+      {/* ─── ASYMMETRICAL STORY BLOCKS ───────────────────────────────────── */}
+      <section className="about-story container">
+        <div className="story-block">
+          <div className="story-block__image" data-cursor="view">
+            <img
+              src={images.curatedRetailBoutiqueRackWarm}
+              alt="Atelier showroom"
+            />
+          </div>
+          <div className="story-block__content">
+            <p className="eyebrow">our core why</p>
+            <h2 className="display story-block__title">The Silent Ritual</h2>
+            <p className="story-block__text">
+              SARTA was founded to bridge high-street efficiency with exclusive design studio restraint. 
+              We stripped away loud branding and transactional noise to focus on architectural posture 
+              and pure textiles. Every linen sleeve, gabardine double-stitch, and cashmere weave is 
+              conceived as a silent ritual.
             </p>
           </div>
-          <div>
-            <h2 className="display">What you get</h2>
-            <ul>
-              <li>Full product catalog with filters and search</li>
-              <li>Product detail pages with gallery and variants</li>
-              <li>Bag drawer, cart page, and demo checkout</li>
-              <li>Placeholder media you can swap for your own shoots</li>
-            </ul>
+        </div>
+
+        <div className="story-block story-block--reverse">
+          <div className="story-block__image" data-cursor="view">
+            <img
+              src={images.curatedRetailDarkRackDetail}
+              alt="Tailoring design detail"
+            />
+          </div>
+          <div className="story-block__content">
+            <p className="eyebrow">The Aesthetics</p>
+            <h2 className="display story-block__title">Structured Freedom</h2>
+            <p className="story-block__text">
+              Inspired by structural concrete architecture and organic, evolving materials, SARTA garments 
+              rely on loose drapes and box blazers. It is structured freedom — clothing that responds 
+              fluidly to metropolitan motion. We believe a wardrobe should feel like a sensory, 
+              atmospheric gallery.
+            </p>
           </div>
         </div>
-        <Link to="/shop" className="btn btn--primary">
-          Shop the collection
-        </Link>
+      </section>
+
+      {/* ─── STATS SHOWCASE ──────────────────────────────────────────────── */}
+      <section className="about-stats">
+        <div className="container stats-grid">
+          <div className="stat-item">
+            <span className="stat-num display">SS26</span>
+            <p className="stat-label">Current Chapter</p>
+          </div>
+          <div className="stat-item">
+            <span className="stat-num display">100%</span>
+            <p className="stat-label">Organic Linen & Wool</p>
+          </div>
+          <div className="stat-item">
+            <span className="stat-num display">003</span>
+            <p className="stat-label">Tales of Luxury</p>
+          </div>
+          <div className="stat-item">
+            <span className="stat-num display">ATEL</span>
+            <p className="stat-label">Showroom Atelier</p>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── CTA BANNER ──────────────────────────────────────────────────── */}
+      <section className="container about-cta">
+        <div className="about-cta__inner">
+          <h2 className="display">Enter the atelier showcase.</h2>
+          <Link to="/shop" className="btn btn--cream">
+            Explore All Artifacts
+          </Link>
+        </div>
       </section>
     </div>
   );
