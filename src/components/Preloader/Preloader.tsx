@@ -1,15 +1,18 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { SartaLogo } from "./SartaLogo";
+import { images } from "../../assets/content-manifest";
 import "./Preloader.css";
 
+// 5 images chosen for maximum contrast diversity when stacked/rotated:
+// blue sky · dark-gold · grey-silver · pure white · neutral-intense
+// Each reads clearly at any angle — avoids the same-palette blur
 const PRELOADER_IMAGES = [
-  "https://outfit.hellohello.is/preloader/image-01.jpg",
-  "https://outfit.hellohello.is/preloader/image-02.jpg",
-  "https://outfit.hellohello.is/preloader/image-03.jpg",
-  "https://outfit.hellohello.is/preloader/image-04.jpg",
-  "https://outfit.hellohello.is/preloader/image-05.jpg",
-  "https://outfit.hellohello.is/preloader/image-06.jpg",
+  images.heroModelSequinHorse,       // blue sky, red headscarf — cinematic anchor
+  images.editorialGoldJewelry,       // black bg, gold tones — opulent
+  images.editorialOrnateCrownCape,   // grey studio, silver crown — ethereal
+  images.editorialWhiteSculptural,   // pure white bg — minimal luxury
+  images.editorialSilverFuturistic,  // neutral bg, intense gaze — avant-garde
 ];
 
 type PreloaderProps = {
