@@ -1,51 +1,124 @@
-/* ─── TALES OF SARTA CINEMATIC HERO ─────────────────────────────────── */
-.tales-hero {
+/* ─── MASTERPIECE EDITORIAL SHOWCASE HERO ───────────────────────────── */
+.showcase-hero {
   position: relative;
   width: 100vw;
   height: 100vh;
   background-color: var(--bg-dark);
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1200px;
 }
 
-.tales-hero__track {
+/* Giant Zara-inspired wordmark with mix-blend-mode difference */
+.showcase-wordmark {
+  position: absolute;
+  inset: 0;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5vw;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.showcase-wordmark__letter {
+  font-family: var(--serif);
+  font-size: clamp(8rem, 20vw, 24rem);
+  font-weight: 500;
+  text-transform: lowercase;
+  color: #ffffff;
+  mix-blend-mode: difference;
+  display: inline-block;
+  line-height: 0.8;
+  will-change: transform;
+  opacity: 0.95;
+  user-select: none;
+}
+
+/* Floating kinetic card track */
+.showcase-track {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100%;
+  gap: 3.5vw;
+  padding: 0 4vw;
+  transform-style: preserve-3d;
 }
 
-.tale-card {
+.kinetic-frame {
   position: relative;
-  flex: 1;
-  height: 100%;
+  width: 21vw;
+  height: 58vh;
+  background-color: var(--bg);
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border-right: 1px solid rgba(255, 255, 255, 0.04);
+  transform-style: preserve-3d;
+  box-shadow: 0 32px 64px rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.04);
   transition:
-    flex 0.85s cubic-bezier(0.25, 1, 0.2, 1),
+    width 0.85s cubic-bezier(0.25, 1, 0.2, 1),
     opacity 0.85s cubic-bezier(0.25, 1, 0.2, 1),
     filter 0.85s cubic-bezier(0.25, 1, 0.2, 1);
-  will-change: flex, opacity;
+  will-change: transform, width, opacity;
 }
 
-.tale-card:last-child {
-  border-right: none;
+/* Hover Spotlights */
+.kinetic-frame.is-active {
+  width: 32vw;
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
-/* Hover Expanding states */
-.tale-card.is-active {
-  flex: 1.8;
-}
-
-.tale-card.is-dimmed {
-  flex: 0.65;
+.kinetic-frame.is-dimmed {
+  width: 17vw;
   opacity: 0.35;
-  filter: grayscale(40%) blur(1px);
+  filter: grayscale(35%) blur(1px);
 }
 
-/* Card Background Media */
-.tale-card__media {
+/* Dual-Border Luxury Frames */
+.kinetic-frame__border-outer {
+  position: absolute;
+  inset: 12px;
+  border: 1px solid var(--accent);
+  opacity: 0.15;
+  z-index: 5;
+  pointer-events: none;
+  transition:
+    opacity 0.75s cubic-bezier(0.25, 1, 0.2, 1),
+    inset 0.75s cubic-bezier(0.25, 1, 0.2, 1);
+}
+
+.kinetic-frame__border-inner {
+  position: absolute;
+  inset: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  z-index: 5;
+  pointer-events: none;
+  transition:
+    inset 0.75s cubic-bezier(0.25, 1, 0.2, 1),
+    border-color 0.75s cubic-bezier(0.25, 1, 0.2, 1);
+}
+
+/* Elastic morph inward on hover */
+.kinetic-frame:hover .kinetic-frame__border-outer {
+  opacity: 0.45;
+  inset: 18px;
+}
+
+.kinetic-frame:hover .kinetic-frame__border-inner {
+  inset: 22px;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Background Media Elements */
+.kinetic-frame__media {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -54,15 +127,15 @@
   transform: scale(1.01);
 }
 
-.tale-card__img {
+.kinetic-frame__img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center top;
-  transition: transform 1.2s cubic-bezier(0.25, 1, 0.2, 1);
+  transition: transform 1.4s cubic-bezier(0.25, 1, 0.2, 1);
 }
 
-.tale-card__video {
+.kinetic-frame__video {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -71,77 +144,128 @@
   object-position: center top;
   opacity: 0;
   pointer-events: none;
-  mix-blend-mode: normal;
-  transition: opacity 1.2s cubic-bezier(0.25, 1, 0.2, 1);
+  transition: opacity 1.4s cubic-bezier(0.25, 1, 0.2, 1);
 }
 
 /* Fade in looping video on hover */
-.tale-card__video.is-visible {
+.kinetic-frame__video.is-visible {
   opacity: 0.85;
 }
 
-.tale-card__overlay {
+.kinetic-frame__overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(8, 8, 8, 0.2) 0%,
-    rgba(8, 8, 8, 0.3) 50%,
-    rgba(8, 8, 8, 0.8) 100%
+    rgba(8, 8, 8, 0.15) 0%,
+    rgba(8, 8, 8, 0.25) 50%,
+    rgba(8, 8, 8, 0.85) 100%
   );
   z-index: 2;
 }
 
-.tale-card:hover .tale-card__img {
-  transform: scale(1.05);
+.kinetic-frame:hover .kinetic-frame__img {
+  transform: scale(1.06);
+}
+
+/* HUD Telemetry Details (Indigo-inspired) */
+.kinetic-frame__hud {
+  position: absolute;
+  top: 36px;
+  right: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  z-index: 6;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition:
+    opacity 0.75s cubic-bezier(0.25, 1, 0.2, 1),
+    transform 0.75s cubic-bezier(0.25, 1, 0.2, 1);
+}
+
+.kinetic-frame:hover .kinetic-frame__hud {
+  opacity: 0.75;
+  transform: translateY(0);
+}
+
+.hud-line {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  font-family: monospace;
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+}
+
+.hud-label {
+  opacity: 0.45;
+}
+
+.hud-val {
+  color: var(--ink);
+}
+
+.hud-grid-badge {
+  align-self: flex-end;
+  margin-top: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 2px 6px;
+  font-size: 8px;
+  font-family: monospace;
+  color: var(--ink);
+  letter-spacing: 0.05em;
 }
 
 /* Card Foreground Content */
-.tale-card__content {
+.kinetic-frame__content {
   position: relative;
-  z-index: 3;
+  z-index: 5;
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 100px 32px 64px;
+  padding: 80px 36px 52px;
 }
 
-.tale-card__header {
+.kinetic-frame__header {
   display: flex;
-  align-items: center;
-  gap: 16px;
+  flex-direction: column;
+  gap: 4px;
 }
 
-.tale-card__code {
+.kinetic-frame__code {
   font-family: var(--serif);
-  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
   font-weight: 300;
   color: var(--accent);
 }
 
-.tale-card__eyebrow {
-  font-size: 9px;
-  letter-spacing: 0.25em;
+.kinetic-frame__eyebrow {
+  font-size: 8.5px;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(245, 243, 239, 0.6);
+  color: rgba(245, 243, 239, 0.55);
   margin: 0;
 }
 
-.tale-card__body {
+.kinetic-frame__body {
   width: 100%;
 }
 
-.tale-card__title {
-  font-size: clamp(2rem, 5vw, 4.25rem);
+.kinetic-frame__title {
+  font-size: clamp(1.8rem, 4.5vw, 3.5rem);
   color: #f5f3ef;
   line-height: 0.95;
   margin-bottom: 20px;
   transition: transform 0.6s var(--ease-out);
 }
 
-.tale-card__expanded-content {
+.kinetic-frame__expanded-content {
   max-height: 0;
   opacity: 0;
   overflow: hidden;
@@ -153,21 +277,21 @@
 }
 
 /* Smooth slide open and fade in when expanded */
-.tale-card.is-active .tale-card__expanded-content {
+.kinetic-frame.is-active .kinetic-frame__expanded-content {
   max-height: 250px;
   opacity: 1;
   transform: translateY(0);
 }
 
-.tale-card__desc {
-  font-size: 13.5px;
+.kinetic-frame__desc {
+  font-size: 13px;
   line-height: 1.6;
-  color: rgba(245, 243, 239, 0.7);
-  max-width: 40ch;
+  color: rgba(245, 243, 239, 0.65);
+  max-width: 32ch;
   margin: 0 0 24px;
 }
 
-.tale-card__btn {
+.kinetic-frame__btn {
   min-height: 40px;
   padding: 0 24px;
 }
@@ -568,31 +692,50 @@
 }
 
 @media (max-width: 900px) {
-  .tales-hero {
+  .showcase-hero {
     height: auto;
+    padding: 120px 0 60px;
+    flex-direction: column;
   }
   
-  .tales-hero__track {
+  .showcase-wordmark {
+    display: none; /* Hide massive letters on small screens to maintain clear layout readability */
+  }
+
+  .showcase-track {
     flex-direction: column;
     height: auto;
+    gap: 40px;
+    padding: 0 24px;
   }
   
-  .tale-card {
-    height: 60vh;
-    border-right: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  .kinetic-frame {
+    width: 100%;
+    height: 55vh;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
   }
 
-  .tale-card.is-active {
-    flex: none;
-    height: 70vh;
+  .kinetic-frame.is-active {
+    width: 100%;
+    height: 62vh;
   }
 
-  .tale-card.is-dimmed {
-    flex: none;
-    height: 50vh;
-    opacity: 0.7;
+  .kinetic-frame.is-dimmed {
+    width: 100%;
+    height: 48vh;
+    opacity: 0.8;
     filter: none;
+  }
+
+  .kinetic-frame__hud {
+    opacity: 0.65;
+    transform: translateY(0);
+    top: 24px;
+    right: 24px;
+  }
+
+  .kinetic-frame__content {
+    padding: 60px 24px 36px;
   }
 
   .prologue-grid {

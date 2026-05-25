@@ -9,33 +9,48 @@ import { sartaAudio } from "../components/AudioManager";
 import "./Home.css";
 import "./HomeGallery.css";
 
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+
 const TALES = [
   {
     code: "01",
     title: "The Equestrian",
-    subtitle: "tale i · equestrian motion & wild silks",
+    subtitle: "tale i · equestrian motion",
     image: images.heroModelSequinHorse,
     video: videos.heroSecondary,
     desc: "Cinematic, raw landscapes where high tailoring meets equestrian freedom. A study on sequined slip draping and sharp linen outlines.",
-    link: "/shop?category=new"
+    link: "/shop?category=new",
+    coords: "45.464° N / 9.191° E",
+    alt: "122m",
+    pressure: "1011 hPa",
+    temp: "19.5°C"
   },
   {
     code: "02",
     title: "The Atelier",
-    subtitle: "tale ii · quiet suiting & double breasts",
+    subtitle: "tale ii · quiet suiting",
     image: images.curatedCampaignTwoWomenSuits,
     video: videos.curatedVideoPinkSuitPortrait,
     desc: "A silent space for heritage tailoring. Double-breasted chalk-pinks and structural midnight wools structured for modern everyday ritual.",
-    link: "/shop?category=women"
+    link: "/shop?category=women",
+    coords: "40.712° N / 74.006° W",
+    alt: "10m",
+    pressure: "1014 hPa",
+    temp: "22.1°C"
   },
   {
     code: "03",
     title: "Avant-Garde",
-    subtitle: "tale iii · pink water & couture leaves",
+    subtitle: "tale iii · pink water & leaves",
     image: images.editorialCoutureLeafRunway,
     video: videos.editorialVideoPantherPinkWater,
     desc: "Surreal nature and sculptural digital couture. A dark fantasy of sculpted branches, flowing gowns, and wolves under deep midnight skies.",
-    link: "/about"
+    link: "/about",
+    coords: "35.676° N / 139.650° E",
+    alt: "44m",
+    pressure: "1009 hPa",
+    temp: "17.8°C"
   }
 ];
 
@@ -76,6 +91,56 @@ export function Home() {
   const [activeTab, setActiveTab] = useState<"all" | "equestrian" | "suits" | "editorial">("all");
   const [hoveredTale, setHoveredTale] = useState<number | null>(null);
 
+  const heroRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<(HTMLElement | null)[]>([]);
+  const letterRefs = useRef<(HTMLSpanElement | null)[]>([]);
+
+  useEffect(() => {
+    const hero = heroRef.current;
+    if (!hero) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = hero.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5; // -0.5 to 0.5
+      const y = (e.clientY - rect.top) / rect.height - 0.5; // -0.5 to 0.5
+
+      // Parallax drift for cards
+      cardRefs.current.forEach((card, idx) => {
+        if (!card) return;
+        const multiplierX = (idx + 1) * 32;
+        const multiplierY = (idx + 1) * 18;
+        gsap.to(card, {
+          x: x * multiplierX,
+          y: y * multiplierY,
+          rotationY: x * 8,
+          rotationX: -y * 8,
+          duration: 1.4,
+          ease: "power2.out",
+          overwrite: "auto",
+        });
+      });
+
+      // Parallax drift for Zara brand wordmark letters
+      letterRefs.current.forEach((letter, idx) => {
+        if (!letter) return;
+        const multiplierX = (5 - idx) * 40;
+        const multiplierY = (5 - idx) * 20;
+        gsap.to(letter, {
+          x: x * multiplierX,
+          y: y * multiplierY,
+          duration: 1.6,
+          ease: "power3.out",
+          overwrite: "auto",
+        });
+      });
+    };
+
+    hero.addEventListener("mousemove", handleMouseMove);
+    return () => {
+      hero.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
+
   const filteredLookbook = useMemo(() => {
     if (activeTab === "all") return lookbookItems.slice(0, 16); // Limit for cinematic speed
     return lookbookItems.filter((item) => item.collection === activeTab).slice(0, 12);
@@ -83,31 +148,57 @@ export function Home() {
 
   return (
     <div className="home page-enter">
-      {/* ─── TALES OF SARTA CINEMATIC HERO ─────────────────────────────────── */}
-      <section className="tales-hero">
-        <div className="tales-hero__track">
+      {/* ─── MASTERPIECE EDITORIAL SHOWCASE HERO ─────────────────────────────────── */}
+      <section ref={heroRef} className="showcase-hero">
+        {/* Giant Zara-inspired wordmark with mix-blend-mode */}
+        <div className="showcase-wordmark" aria-hidden="true">
+          {["s", "a", "r", "t", "a"].map((letter, idx) => (
+            <span
+              key={idx}
+              ref={(el) => {
+                letterRefs.current[idx] = el;
+              }}
+              className="showcase-wordmark__letter"
+            >
+              {letter}
+            </span>
+          ))}
+        </div>
+
+        {/* Floating kinetic cards */}
+        <div className="showcase-track">
           {TALES.map((tale, index) => {
             const isHovered = hoveredTale === index;
             const isAnyHovered = hoveredTale !== null;
             
-            let taleClass = "tale-card";
-            if (isHovered) taleClass += " is-active";
-            else if (isAnyHovered) taleClass += " is-dimmed";
+            let cardClass = "kinetic-frame";
+            if (isHovered) cardClass += " is-active";
+            else if (isAnyHovered) cardClass += " is-dimmed";
 
             return (
               <article
                 key={tale.code}
-                className={taleClass}
-                onMouseEnter={() => setHoveredTale(index)}
+                ref={(el) => {
+                  cardRefs.current[index] = el;
+                }}
+                className={cardClass}
+                onMouseEnter={() => {
+                  setHoveredTale(index);
+                  sartaAudio.tick(); // click feedback plink
+                }}
                 onMouseLeave={() => setHoveredTale(null)}
                 data-cursor="view"
               >
+                {/* Dual-border luxury frames */}
+                <div className="kinetic-frame__border-outer" />
+                <div className="kinetic-frame__border-inner" />
+
                 {/* Background media elements */}
-                <div className="tale-card__media">
+                <div className="kinetic-frame__media">
                   <img
                     src={tale.image}
                     alt={tale.title}
-                    className="tale-card__img"
+                    className="kinetic-frame__img"
                   />
                   {/* Autoplay campaign video overlay on hover */}
                   <video
@@ -116,23 +207,46 @@ export function Home() {
                     muted
                     loop
                     playsInline
-                    className={`tale-card__video ${isHovered ? "is-visible" : ""}`}
+                    className={`kinetic-frame__video ${isHovered ? "is-visible" : ""}`}
                   />
-                  <div className="tale-card__overlay" />
+                  <div className="kinetic-frame__overlay" />
+                </div>
+
+                {/* HUD Telemetry Coordinates (Indigo Laboratory style) */}
+                <div className="kinetic-frame__hud">
+                  <div className="hud-line">
+                    <span className="hud-label">COORD</span>
+                    <span className="hud-val">{tale.coords}</span>
+                  </div>
+                  <div className="hud-line">
+                    <span className="hud-label">ALT</span>
+                    <span className="hud-val">{tale.alt}</span>
+                  </div>
+                  <div className="hud-line">
+                    <span className="hud-label">PRES</span>
+                    <span className="hud-val">{tale.pressure}</span>
+                  </div>
+                  <div className="hud-line">
+                    <span className="hud-label">SYS_T</span>
+                    <span className="hud-val">{tale.temp}</span>
+                  </div>
+                  <div className="hud-grid-badge">
+                    <span>{tale.code}</span>
+                  </div>
                 </div>
 
                 {/* Card textual contents */}
-                <div className="tale-card__content">
-                  <div className="tale-card__header">
-                    <span className="tale-card__code">{tale.code}</span>
-                    <p className="tale-card__eyebrow">{tale.subtitle}</p>
+                <div className="kinetic-frame__content">
+                  <div className="kinetic-frame__header">
+                    <span className="kinetic-frame__code">{tale.code}</span>
+                    <p className="kinetic-frame__eyebrow">{tale.subtitle}</p>
                   </div>
                   
-                  <div className="tale-card__body">
-                    <h1 className="display tale-card__title">{tale.title}</h1>
-                    <div className="tale-card__expanded-content">
-                      <p className="tale-card__desc">{tale.desc}</p>
-                      <Link to={tale.link} className="btn btn--cream tale-card__btn">
+                  <div className="kinetic-frame__body">
+                    <h1 className="display kinetic-frame__title">{tale.title}</h1>
+                    <div className="kinetic-frame__expanded-content">
+                      <p className="kinetic-frame__desc">{tale.desc}</p>
+                      <Link to={tale.link} className="btn btn--cream kinetic-frame__btn">
                         Explore Chapter
                       </Link>
                     </div>
