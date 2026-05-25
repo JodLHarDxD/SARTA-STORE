@@ -29,11 +29,28 @@
   padding: 8px 24px 32px;
   cursor: grab;
   scroll-snap-type: x mandatory;
-  scrollbar-width: none;
+  scrollbar-width: auto;
+  scrollbar-color: var(--accent) rgba(255, 255, 255, 0.04);
 }
 
 .drag-gallery__track::-webkit-scrollbar {
-  display: none;
+  display: block;
+  height: 4px; /* Super thin gold scrollbar track */
+}
+
+.drag-gallery__track::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  margin-inline: 24px;
+}
+
+.drag-gallery__track::-webkit-scrollbar-thumb {
+  background: var(--accent); /* Luxury gold color */
+  border-radius: 99px;
+  transition: background 0.3s;
+}
+
+.drag-gallery__track::-webkit-scrollbar-thumb:hover {
+  background: var(--ink);
 }
 
 .drag-gallery__track.is-dragging {

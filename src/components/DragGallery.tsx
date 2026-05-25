@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { dragGalleryItems } from "../data/products";
 import "./DragGallery.css";
 
-/** Palmer-inspired horizontal drag-to-explore gallery with hover autoplay videos */
+/** Palmer-inspired horizontal drag-to-explore gallery with hover autoplay videos & horizontal wheel scroll */
 export function DragGallery() {
   const trackRef = useRef<HTMLDivElement>(null);
   const isDragging = useRef(false);
@@ -32,6 +32,14 @@ export function DragGallery() {
       track.classList.remove("is-dragging");
     };
 
+    const onWheel = (e: WheelEvent) => {
+      // Intercept vertical scroll on track and convert to smooth horizontal scroll
+      if (e.deltaY !== 0) {
+        e.preventDefault();
+        track.scrollLeft += e.deltaY * 0.85;
+      }
+    };
+
     const mouseDown = (e: MouseEvent) => onDown(e.pageX);
     const mouseMove = (e: MouseEvent) => onMove(e.pageX);
     const touchStart = (e: TouchEvent) => onDown(e.touches[0].pageX);
@@ -43,6 +51,7 @@ export function DragGallery() {
     track.addEventListener("touchstart", touchStart, { passive: true });
     track.addEventListener("touchmove", touchMove, { passive: true });
     window.addEventListener("touchend", onUp);
+    track.addEventListener("wheel", onWheel, { passive: false });
 
     return () => {
       track.removeEventListener("mousedown", mouseDown);
@@ -51,6 +60,7 @@ export function DragGallery() {
       track.removeEventListener("touchstart", touchStart);
       track.removeEventListener("touchmove", touchMove);
       window.removeEventListener("touchend", onUp);
+      track.removeEventListener("wheel", onWheel);
     };
   }, []);
 
