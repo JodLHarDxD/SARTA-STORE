@@ -128,6 +128,12 @@ export const videos = {
   promoShort01: '/media/campaign-equestrian/videos/promo-short-01.mp4',
   promoShort02: '/media/campaign-equestrian/videos/promo-short-02.mp4',
 
+  // ─── NEW EDITORIAL VIDEOS (2026-05) ───
+  // Portrait 1152×1744, ~6s each — perfect for editorial grid/autoplay
+  editorialVideoPerfumeSilhouette: '/media/campaign-equestrian/videos/editorial-perfume-silhouette.mp4',
+  editorialVideoCoutureLeafRunway: '/media/campaign-equestrian/videos/editorial-couture-leaf-runway.mp4',
+  editorialVideoPantherPinkWater:  '/media/campaign-equestrian/videos/editorial-panther-pink-water.mp4',
+
   // ─── CURATED SUITS CAMPAIGN (2026-05) ───
   curatedVideoBlackSuitStudio: '/media/campaign-curated-suits/videos/video-black-suit-studio.mp4',
   curatedVideoPinkSuitPortrait: '/media/campaign-curated-suits/videos/video-pink-suit-portrait.mp4',
