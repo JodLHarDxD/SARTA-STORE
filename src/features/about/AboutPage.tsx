@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { images } from "../assets/content-manifest";
+import { images } from "@/data/content-manifest";
 import "./AboutPage.css";
 
 export function AboutPage() {
@@ -10,7 +10,7 @@ export function AboutPage() {
       ═══════════════════════════════════════════════════════════════ */}
       <section className="zara-poster-hero">
         <div className="zara-poster-hero__frame">
-          <img src="/media/campaign_both.png" alt="SARTA Atelier Story" className="zara-poster-hero__img" />
+          <img src="/media/hero-woman-urban-suit.jpg" alt="SARTA Atelier Story" className="zara-poster-hero__img" />
           <div className="zara-poster-hero__logo">Sarta</div>
         </div>
 

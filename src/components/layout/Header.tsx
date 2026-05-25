@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { useCart } from "../context/CartContext";
-import { sartaAudio } from "./AudioManager";
+import { useCart } from "@/features/cart/CartContext";
+import { sartaAudio } from "@/lib/audio";
 import "./Header.css";
 
 const nav = [

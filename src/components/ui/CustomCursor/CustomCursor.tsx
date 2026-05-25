@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import { sartaAudio } from "./AudioManager";
+import { sartaAudio } from "@/lib/audio";
 import "./CustomCursor.css";
 
 export function CustomCursor() {

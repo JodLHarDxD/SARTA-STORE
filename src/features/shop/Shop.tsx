@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { ProductCard } from "../components/ProductCard";
-import { categories, products } from "../data/products";
+import { ProductCard } from "@/features/product/ProductCard";
+import { categories, products } from "@/data/products";
 import "./Shop.css";
 
 const sorts = [

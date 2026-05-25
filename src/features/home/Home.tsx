@@ -1,11 +1,11 @@
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { DragGallery } from "../components/DragGallery";
-import { ProductCard } from "../components/ProductCard";
-import { products } from "../data/products";
-import { images, videos } from "../assets/content-manifest";
-import { lookbookItems } from "../data/lookbook-data";
-import { sartaAudio } from "../components/AudioManager";
+import { DragGallery } from "@/features/editorial/DragGallery";
+import { ProductCard } from "@/features/product/ProductCard";
+import { products } from "@/data/products";
+import { images, videos } from "@/data/content-manifest";
+import { lookbookItems } from "@/data/lookbook-data";
+import { sartaAudio } from "@/lib/audio";
 import "./Home.css";
 import "./HomeGallery.css";
 

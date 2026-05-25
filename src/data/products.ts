@@ -1,19 +1,6 @@
-export type Product = {
-  id: string;
-  slug: string;
-  name: string;
-  price: number;
-  category: string;
-  subCategory?: string;
-  tag?: string;
-  colors: string[];
-  sizes: string[];
-  description: string;
-  details: string[];
-  image: string;
-  hoverImage?: string;
-  gallery: string[];
-};
+// Type lives in src/types/product.ts — import from there in new code
+import type { Product } from "@/types/product";
+export type { Product };
 
 // Local product images (served from /public/products/)
 const p = (path: string) => `/products/${path}`;
@@ -567,10 +554,5 @@ export function getProductBySlug(slug: string) {
   return products.find((p) => p.slug === slug);
 }
 
-export function formatPrice(amount: number) {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 0,
-  }).format(amount);
-}
+// Re-export from canonical lib location — import formatPrice from @/lib/utils instead
+export { formatPrice } from "@/lib/utils";

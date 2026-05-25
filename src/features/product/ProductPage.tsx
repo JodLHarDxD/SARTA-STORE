@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
-import { useCart } from "../context/CartContext";
-import { formatPrice, getProductBySlug, products } from "../data/products";
-import { ProductCard } from "../components/ProductCard";
+import { useCart } from "@/features/cart/CartContext";
+import { formatPrice } from "@/lib/utils";
+import { getProductBySlug, products } from "@/data/products";
+import { ProductCard } from "@/features/product/ProductCard";
 import "./ProductPage.css";
 
 export function ProductPage() {

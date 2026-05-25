@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { useCart } from "../context/CartContext";
-import { formatPrice } from "../data/products";
+import { useCart } from "@/features/cart/CartContext";
+import { formatPrice } from "@/lib/utils";
 import "./CartDrawer.css";
 
 export function CartDrawer() {

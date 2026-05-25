@@ -1,18 +1,26 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Lenis from "lenis";
-import { CartProvider } from "./context/CartContext";
-import { Header } from "./components/Header";
-import { Footer } from "./components/Footer";
-import { CartDrawer } from "./components/CartDrawer";
-import { Preloader } from "./components/Preloader/Preloader";
-import { CustomCursor } from "./components/CustomCursor";
-import { Home } from "./pages/Home";
-import { Shop } from "./pages/Shop";
-import { ProductPage } from "./pages/ProductPage";
-import { CartPage } from "./pages/CartPage";
-import { CheckoutPage } from "./pages/CheckoutPage";
-import { AboutPage } from "./pages/AboutPage";
+
+// ── Providers ──────────────────────────────────────────────────────────────────
+import { CartProvider } from "@/features/cart/CartContext";
+
+// ── Layout ─────────────────────────────────────────────────────────────────────
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
+
+// ── UI (site-wide) ─────────────────────────────────────────────────────────────
+import { CartDrawer } from "@/features/cart/CartDrawer";
+import { Preloader } from "@/components/ui/Preloader/Preloader";
+import { CustomCursor } from "@/components/ui/CustomCursor/CustomCursor";
+
+// ── Pages / Features ───────────────────────────────────────────────────────────
+import { Home } from "@/features/home/Home";
+import { Shop } from "@/features/shop/Shop";
+import { ProductPage } from "@/features/product/ProductPage";
+import { CartPage } from "@/features/cart/CartPage";
+import { CheckoutPage } from "@/features/checkout/CheckoutPage";
+import { AboutPage } from "@/features/about/AboutPage";
 
 export default function App() {
   const [showPreloader, setShowPreloader] = useState(true);
@@ -47,12 +55,12 @@ export default function App() {
       <BrowserRouter>
         {/* Animated dynamic noise film grain overlay across the entire SARTA showcase */}
         <div className="noise-overlay" />
-        
+
         {showPreloader && <Preloader onComplete={handlePreloaderComplete} />}
-        
+
         {/* Fluid Inertial Custom Mouse Cursor */}
         <CustomCursor />
-        
+
         <Header />
         <CartDrawer />
         <Routes>
@@ -68,4 +76,3 @@ export default function App() {
     </CartProvider>
   );
 }
-

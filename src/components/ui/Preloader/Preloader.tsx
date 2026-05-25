@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import { images } from "../../assets/content-manifest";
-import { sartaAudio } from "../AudioManager";
+import { images } from "@/data/content-manifest";
+import { sartaAudio } from "@/lib/audio";
 import "./Preloader.css";
 
 // 9 high-impact fashion editorial images

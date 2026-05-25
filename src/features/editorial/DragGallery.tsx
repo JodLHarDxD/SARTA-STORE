@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { dragGalleryItems } from "../data/products";
+import { dragGalleryItems } from "@/data/products";
 import "./DragGallery.css";
 
 /** Palmer-inspired horizontal drag-to-explore gallery with hover autoplay videos & horizontal wheel scroll */

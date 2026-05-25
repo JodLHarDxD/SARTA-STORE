@@ -6,7 +6,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import type { Product } from "../data/products";
+import type { Product } from "@/types/product";
 
 export type CartItem = {
   product: Product;
