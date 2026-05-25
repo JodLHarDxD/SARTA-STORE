@@ -1,8 +1,12 @@
+import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { DragGallery } from "../components/DragGallery";
 import { ProductCard } from "../components/ProductCard";
 import { products } from "../data/products";
+import { images } from "../assets/content-manifest";
+import { lookbookItems } from "../data/lookbook-data";
 import "./Home.css";
+import "./HomeGallery.css";
 
 const marquees = [
   "PDPs",
@@ -40,6 +44,12 @@ const steps = [
 
 export function Home() {
   const featured = products.slice(0, 8);
+  const [activeTab, setActiveTab] = useState<"all" | "equestrian" | "suits" | "editorial">("all");
+
+  const filteredLookbook = useMemo(() => {
+    if (activeTab === "all") return lookbookItems;
+    return lookbookItems.filter((item) => item.collection === activeTab);
+  }, [activeTab]);
 
   return (
     <div className="home page-enter">
@@ -66,12 +76,12 @@ export function Home() {
         </div>
         <div className="hero__visual">
           <img
-            src="https://outfit.hellohello.is/preloader/image-01.jpg"
+            src={images.curatedHeroWomanUrbanSuit}
             alt="Editorial fashion"
             className="hero__img hero__img--main"
           />
           <img
-            src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=1200&q=80"
+            src={images.curatedCampaignTwoWomenSuits}
             alt=""
             className="hero__img hero__img--float"
           />
@@ -92,30 +102,54 @@ export function Home() {
 
       <DragGallery />
 
-      <section className="upload-zone container">
-        <div className="upload-zone__copy">
-          <p className="eyebrow">Visual workflow</p>
-          <h2 className="display upload-zone__title">
-            Upload or drop your assets
-          </h2>
-          <p>
-            Inspired by Fourmula — one product, infinite scenes. Replace these
-            placeholders with your campaign photography when ready.
+      <section className="lookbook-section">
+        <div className="container lookbook-head">
+          <p className="eyebrow">The Archives</p>
+          <h2 className="display lookbook-title">editorial cinema & lookbooks</h2>
+          <p className="lookbook-subtitle">
+            explore our visual world — dynamic video captures, campaign details, and modern boutique showroom atmosphere.
           </p>
         </div>
-        <div className="upload-zone__grid">
-          {[
-            "https://outfit.hellohello.is/preloader/image-02.jpg",
-            "https://outfit.hellohello.is/preloader/image-03.jpg",
-            "https://outfit.hellohello.is/preloader/image-04.jpg",
-            "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=600&q=80",
-            "https://images.unsplash.com/photo-1503342217505-9e6cf27fe70f?auto=format&fit=crop&w=600&q=80",
-            "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=600&q=80",
-          ].map((src, i) => (
-            <div key={src} className="upload-zone__cell" style={{ animationDelay: `${i * 0.05}s` }}>
-              <img src={src} alt="" loading="lazy" />
-            </div>
-          ))}
+
+        <div className="container">
+          <div className="lookbook-filters">
+            {(["all", "equestrian", "suits", "editorial"] as const).map((tab) => (
+              <button
+                key={tab}
+                type="button"
+                className={`lookbook-filter-btn ${activeTab === tab ? "is-active" : ""}`}
+                onClick={() => setActiveTab(tab)}
+              >
+                {tab === "all" ? "All Works" : tab === "suits" ? "suits curated" : tab === "editorial" ? "editorial classics" : tab}
+              </button>
+            ))}
+          </div>
+
+          <div className="lookbook-grid">
+            {filteredLookbook.map((item) => (
+              <article key={item.id} className="lookbook-card">
+                <div className="lookbook-media-wrap">
+                  {item.type === "video" ? (
+                    <video
+                      src={item.src}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                    />
+                  ) : (
+                    <img src={item.src} alt={item.title} loading="lazy" />
+                  )}
+                  <div className="lookbook-overlay">
+                    <div className="lookbook-info">
+                      <h3 className="lookbook-card-title">{item.title}</h3>
+                      <p className="lookbook-card-subtitle">{item.subtitle}</p>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 

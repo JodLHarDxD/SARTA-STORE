@@ -489,15 +489,15 @@ export const products: Product[] = [
 
 export const heroSlides = [
   {
-    src: "/src/assets/images/hero-model-sequin-horse.jpg",
+    src: "/media/campaign-equestrian/images/hero-model-sequin-horse.jpg",
     label: "New Season",
   },
   {
-    src: "/src/assets/images/editorial-white-sculptural.png",
+    src: "/media/campaign-equestrian/images/editorial-white-sculptural.png",
     label: "Women",
   },
   {
-    src: "/src/assets/images/editorial-gold-jewelry.jpg",
+    src: "/media/campaign-equestrian/images/editorial-gold-jewelry.jpg",
     label: "Editorial",
   },
   {
@@ -508,27 +508,27 @@ export const heroSlides = [
 
 export const dragGalleryItems = [
   {
-    src: "/src/assets/images/editorial-ornate-crown-cape.png",
+    src: "/media/campaign-equestrian/images/editorial-ornate-crown-cape.png",
     title: "Haute Couture",
     subtitle: "Editorial",
   },
   {
-    src: "/src/assets/images/editorial-gold-jewelry.jpg",
+    src: "/media/campaign-equestrian/images/editorial-gold-jewelry.jpg",
     title: "Gold Hour",
     subtitle: "Campaign",
   },
   {
-    src: "/src/assets/images/editorial-white-sculptural.png",
+    src: "/media/campaign-equestrian/images/editorial-white-sculptural.png",
     title: "White Architecture",
     subtitle: "Women",
   },
   {
-    src: "/src/assets/images/editorial-silver-futuristic.png",
+    src: "/media/campaign-equestrian/images/editorial-silver-futuristic.png",
     title: "Future Luxury",
     subtitle: "New Season",
   },
   {
-    src: "/src/assets/images/lifestyle-coat-metro.jpg",
+    src: "/media/campaign-equestrian/images/lifestyle-coat-metro.jpg",
     title: "City Motion",
     subtitle: "Lifestyle",
   },

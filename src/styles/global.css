@@ -6,7 +6,7 @@
   --muted: #6b6560;
   --accent: #c45c3e;
   --line: rgba(17, 17, 17, 0.12);
-  --serif: "Instrument Serif", Georgia, serif;
+  --serif: "Bodoni Moda", "Playfair Display", Georgia, serif;
   --sans: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --header-h: 72px;
@@ -101,9 +101,10 @@ button {
 
 .display {
   font-family: var(--serif);
-  font-weight: 400;
-  line-height: 0.95;
-  letter-spacing: -0.03em;
+  font-weight: 800; /* Bold high-contrast display serif */
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  text-transform: lowercase; /* Elegant lowercase look as in your reference image */
 }
 
 .btn {

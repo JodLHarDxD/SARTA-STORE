@@ -13,12 +13,8 @@ import { CartPage } from "./pages/CartPage";
 import { CheckoutPage } from "./pages/CheckoutPage";
 import { AboutPage } from "./pages/AboutPage";
 
-const PRELOADER_KEY = "sarta-preloader-seen";
-
 export default function App() {
-  const [showPreloader, setShowPreloader] = useState(
-    () => !sessionStorage.getItem(PRELOADER_KEY),
-  );
+  const [showPreloader, setShowPreloader] = useState(true);
 
   useEffect(() => {
     if (showPreloader) return;
@@ -42,7 +38,6 @@ export default function App() {
   }, [showPreloader]);
 
   const handlePreloaderComplete = () => {
-    sessionStorage.setItem(PRELOADER_KEY, "1");
     setShowPreloader(false);
   };
 

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { images } from "../assets/content-manifest";
 import "./AboutPage.css";
 
 export function AboutPage() {
@@ -12,8 +13,8 @@ export function AboutPage() {
           </h1>
         </div>
         <img
-          src="https://outfit.hellohello.is/preloader/image-05.jpg"
-          alt="SARTA editorial"
+          src={images.curatedRetailBoutiqueRackWarm}
+          alt="SARTA showroom"
           className="about-hero__img"
         />
       </section>

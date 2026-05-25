@@ -6,15 +6,18 @@
   align-items: center;
   justify-content: center;
   background: #000;
-  color: var(--cream);
   clip-path: inset(0% 0% 0% 0%);
   contain: layout style paint;
 }
 
 .preloader__inner {
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+/* ─── STACKED IMAGE CARDS ─────────────────────────────────────────────── */
 .preloader__images {
   position: fixed;
   inset: 0;
@@ -22,7 +25,6 @@
   align-items: center;
   justify-content: center;
   pointer-events: none;
-  contain: layout paint style;
 }
 
 .preloader__images.is-hidden {
@@ -31,56 +33,65 @@
 
 .preloader__image {
   position: absolute;
-  width: min(30vw, 280px);
-  aspect-ratio: 9 / 12;
+  /* Wider, less tall — more like a fashion card than a phone screenshot */
+  width: min(38vw, 320px);
+  aspect-ratio: 3 / 4;
   object-fit: cover;
+  object-position: center top;
   will-change: transform;
+  border-radius: 2px;
 }
 
 @media (min-width: 768px) {
   .preloader__image {
-    width: 12vw;
-    max-width: 220px;
+    width: min(22vw, 260px);
   }
 }
 
-.preloader__logo-wrap {
-  overflow: hidden;
+/* ─── SARTA WORDMARK ──────────────────────────────────────────────────── */
+.preloader__wordmark-wrap {
   position: relative;
-  z-index: 2;
+  z-index: 10;
+  overflow: hidden;
+  /* sits on top of the image stack — blend mode does the magic */
 }
 
-.preloader__logo {
+.preloader__wordmark {
   display: block;
-  margin-inline: auto;
-  max-width: min(70vw, 28rem);
-  overflow: visible;
-  fill: var(--cream);
+  font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  font-size: clamp(5rem, 20vw, 13rem);
+  font-weight: 300;
+  font-style: italic;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: #fff;
+  /* Inverts: white text appears black over light image areas, stays white over dark */
   mix-blend-mode: difference;
+  user-select: none;
+  white-space: nowrap;
 }
 
-.preloader__logo.is-hidden {
+.preloader__wordmark.is-hidden {
   visibility: hidden;
 }
 
+/* ─── COUNTER ─────────────────────────────────────────────────────────── */
 .preloader__counter-wrap {
-  position: absolute;
-  top: 200%;
-  left: 80%;
+  position: fixed;
+  bottom: 2.5rem;
+  right: 2.5rem;
   overflow: hidden;
-  font-size: 1.5rem;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0.08em;
-}
-
-@media (min-width: 768px) {
-  .preloader__counter-wrap {
-    top: -40%;
-    left: 105%;
-  }
+  z-index: 11;
 }
 
 .preloader__counter {
   display: block;
+  font-family: 'Inter', monospace;
+  font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.55);
+  font-variant-numeric: tabular-nums;
   text-align: right;
 }
