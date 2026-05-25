@@ -251,29 +251,33 @@
   perspective: 1200px;
 }
 
-/* Giant Zara-inspired wordmark with mix-blend-mode difference */
+/* Giant wordmark — letters fill the hero, mix-blend-mode inverts over media */
 .showcase-wordmark {
   position: absolute;
   inset: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 5vw;
+  padding: 0 1.5vw;
   pointer-events: none;
   z-index: 4;
 }
 
 .showcase-wordmark__letter {
   font-family: var(--serif);
-  font-size: clamp(8rem, 20vw, 24rem);
+  font-size: clamp(12rem, 28vw, 42rem);
   font-weight: 500;
+  font-variation-settings: "opsz" 96;
   text-transform: lowercase;
   color: #ffffff;
+  /* difference = white text inverts underlying media pixel-by-pixel
+     blue sky  → orange;  red scarf → cyan;  dark bg → white
+     This is the Indigo "image showing through letters" effect */
   mix-blend-mode: difference;
   display: inline-block;
-  line-height: 0.8;
+  line-height: 0.82;
   will-change: transform;
-  opacity: 0.95;
+  opacity: 1;
   user-select: none;
 }
 
@@ -286,40 +290,42 @@
   justify-content: center;
   width: 100%;
   height: 100%;
-  gap: 3.5vw;
-  padding: 0 4vw;
+  gap: 1.8vw;
+  padding: 0 2vw;
   transform-style: preserve-3d;
 }
 
 .kinetic-frame {
   position: relative;
-  width: 21vw;
-  height: 58vh;
+  /* Bigger cards — cover meaningful portion of screen */
+  width: clamp(200px, 25vw, 360px);
+  height: 78vh;
   background-color: var(--bg);
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   transform-style: preserve-3d;
-  box-shadow: 0 32px 64px rgba(0, 0, 0, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   transition:
-    width 0.85s cubic-bezier(0.25, 1, 0.2, 1),
-    opacity 0.85s cubic-bezier(0.25, 1, 0.2, 1),
-    filter 0.85s cubic-bezier(0.25, 1, 0.2, 1);
+    width 0.72s cubic-bezier(0.3, 1, 0.25, 1),
+    opacity 0.55s cubic-bezier(0.3, 1, 0.25, 1),
+    filter 0.55s cubic-bezier(0.3, 1, 0.25, 1);
   will-change: transform, width, opacity;
 }
 
-/* Hover Spotlights */
+/* Hover expand — much wider active card */
 .kinetic-frame.is-active {
-  width: 32vw;
-  border-color: rgba(255, 255, 255, 0.1);
+  width: clamp(380px, 42vw, 600px);
+  border-color: rgba(255, 255, 255, 0.12);
 }
 
+/* Aggressive dimming on neighbours — makes active pop */
 .kinetic-frame.is-dimmed {
-  width: 17vw;
-  opacity: 0.35;
-  filter: grayscale(35%) blur(1px);
+  width: clamp(110px, 13vw, 170px);
+  opacity: 0.15;
+  filter: grayscale(60%) blur(1.5px);
 }
 
 /* Dual-Border Luxury Frames */
@@ -372,7 +378,7 @@
   height: 100%;
   object-fit: cover;
   object-position: center top;
-  transition: transform 1.4s cubic-bezier(0.25, 1, 0.2, 1);
+  transition: transform 1.0s cubic-bezier(0.25, 1, 0.2, 1);
 }
 
 .kinetic-frame__video {
@@ -384,12 +390,13 @@
   object-position: center top;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 1.4s cubic-bezier(0.25, 1, 0.2, 1);
+  /* Snappy crossfade: 0.45s in, but smooth ease-out feel */
+  transition: opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Fade in looping video on hover */
+/* Full opacity — no faded video, media should hit hard */
 .kinetic-frame__video.is-visible {
-  opacity: 0.85;
+  opacity: 1;
 }
 
 .kinetic-frame__overlay {
@@ -405,7 +412,12 @@
 }
 
 .kinetic-frame:hover .kinetic-frame__img {
-  transform: scale(1.06);
+  transform: scale(1.07);
+}
+
+/* Ensure video also gets scale effect */
+.kinetic-frame:hover .kinetic-frame__video {
+  transform: scale(1.07);
 }
 
 /* HUD Telemetry Details (Indigo-inspired) */
@@ -992,20 +1004,20 @@
 
   .kinetic-frame {
     width: 100%;
-    height: 55vh;
+    height: 58vh;
     box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
   }
 
   .kinetic-frame.is-active {
     width: 100%;
-    height: 62vh;
+    height: 65vh;
   }
 
   .kinetic-frame.is-dimmed {
     width: 100%;
-    height: 48vh;
-    opacity: 0.8;
-    filter: none;
+    height: 45vh;
+    opacity: 0.5;
+    filter: grayscale(30%);
   }
 
   .kinetic-frame__hud {
