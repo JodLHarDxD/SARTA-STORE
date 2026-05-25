@@ -234,7 +234,7 @@ export function Preloader({ onComplete }: PreloaderProps) {
           ) : (
             <div className="preloader__choice-wrap page-enter">
               <p className="preloader__choice-eyebrow">Acoustic Sarta Laboratory</p>
-              <h2 className="preloader__choice-title">experience this showcase with atmospheric sound?</h2>
+              <h2 className="preloader__choice-title">EXPERIENCE THIS SHOWCASE WITH ATMOSPHERIC SOUND?</h2>
               <div className="preloader__choice-actions">
                 <button
                   type="button"

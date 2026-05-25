@@ -157,10 +157,11 @@
   font-family: var(--serif);
   font-size: clamp(1.2rem, 3vw, 1.6rem);
   font-weight: 400;
-  color: #f5f3ef;
+  color: #ffffff;
+  mix-blend-mode: difference;
   line-height: 1.35;
   margin: 0;
-  text-transform: lowercase;
+  text-transform: uppercase;
 }
 
 .preloader__choice-actions {

@@ -11,6 +11,8 @@ import "./HomeGallery.css";
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
 
 const TALES = [
   {
@@ -81,15 +83,17 @@ export function Home() {
       const x = (e.clientX - rect.left) / rect.width - 0.5;
       const y = (e.clientY - rect.top) / rect.height - 0.5;
 
-      cardRefs.current.forEach((card, idx) => {
+      cardRefs.current.forEach((card) => {
         if (!card) return;
-        const multiplierX = (idx + 1) * 32;
-        const multiplierY = (idx + 1) * 18;
+        // Subtle and uniform parallax shifts the cards in unison, maintaining track alignment
+        // and avoiding excessive movement or drift for the third card.
+        const multiplierX = 20;
+        const multiplierY = 10;
         gsap.to(card, {
           x: x * multiplierX,
           y: y * multiplierY,
-          rotationY: x * 8,
-          rotationX: -y * 8,
+          rotationY: x * 6,
+          rotationX: -y * 6,
           duration: 1.4,
           ease: "power2.out",
           overwrite: "auto",
@@ -116,6 +120,35 @@ export function Home() {
     };
   }, []);
 
+  // ── Scroll-reveal: "sarta" letters stagger in as section enters viewport ──
+  useEffect(() => {
+    const letters = letterRefs.current.filter(Boolean) as HTMLSpanElement[];
+    if (!letters.length || !heroRef.current) return;
+
+    // Start hidden (CSS already sets opacity: 0)
+    gsap.set(letters, { yPercent: 80, opacity: 0 });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: heroRef.current,
+        start: "top 75%",
+        once: true,
+      },
+    });
+
+    tl.to(letters, {
+      yPercent: 0,
+      opacity: 1,
+      duration: 1.1,
+      ease: "expo.out",
+      stagger: 0.07,
+    });
+
+    return () => {
+      ScrollTrigger.getAll().forEach((t) => t.kill());
+    };
+  }, []);
+
   const filteredLookbook = useMemo(() => {
     if (activeTab === "all") return lookbookItems.slice(0, 16);
     return lookbookItems.filter((item) => item.collection === activeTab).slice(0, 12);
@@ -125,9 +158,10 @@ export function Home() {
     <div className="home page-enter">
 
       {/* ═══════════════════════════════════════════════════════════════
-          FULL-BLEED VIDEO HERO — ZARA-STYLE BRAND NAME
+          FULL-BLEED CINEMATIC HERO WITH INTERACTIVE HOVER SIDEBAR
       ═══════════════════════════════════════════════════════════════ */}
       <section className="video-hero">
+        {/* Full-bleed background video */}
         <video
           src={videos.heroMain}
           autoPlay
@@ -138,7 +172,59 @@ export function Home() {
         />
         <div className="video-hero__overlay" />
 
-        {/* Zara-style brand name — enormous, positioned bottom-right, bleeding off edge */}
+        {/* Left Side Sidebar / Interactive Panel Area (Transparent - directly over video) */}
+        <div className="video-hero__sidebar-area">
+          {/* Vertical brand name shown initially */}
+          <div className="video-hero__vertical-brand" aria-hidden="true">
+            <span>S</span>
+            <span>A</span>
+            <span>R</span>
+            <span>T</span>
+            <span>A</span>
+          </div>
+
+          {/* Transparent slide-out panel */}
+          <div className="video-hero__hover-panel">
+            <div className="hover-panel__content">
+              <div className="hover-panel__brand-header">SARTA</div>
+              <p className="hover-panel__subtitle">ateliers & cinema</p>
+              
+              <nav className="hover-panel__nav">
+                <Link to="/shop" className="hover-panel__link" onClick={() => sartaAudio.tick()}>
+                  <span className="link-num">01</span>
+                  <span className="link-text">Shop All</span>
+                </Link>
+                <Link to="/shop?category=new" className="hover-panel__link" onClick={() => sartaAudio.tick()}>
+                  <span className="link-num">02</span>
+                  <span className="link-text">New In</span>
+                </Link>
+                <Link to="/shop?category=women" className="hover-panel__link" onClick={() => sartaAudio.tick()}>
+                  <span className="link-num">03</span>
+                  <span className="link-text">Women's Suiting</span>
+                </Link>
+                <Link to="/shop?category=men" className="hover-panel__link" onClick={() => sartaAudio.tick()}>
+                  <span className="link-num">04</span>
+                  <span className="link-text">Men's Editorial</span>
+                </Link>
+                <Link to="/about" className="hover-panel__link" onClick={() => sartaAudio.tick()}>
+                  <span className="link-num">05</span>
+                  <span className="link-text">About Sarta</span>
+                </Link>
+              </nav>
+
+              <div className="hover-panel__footer">
+                <div className="hover-panel__telemetry">
+                  <div>LAT. 45.464° N</div>
+                  <div>LNG. 9.191° E</div>
+                  <div>SYS. CONNECTED</div>
+                </div>
+                <div className="hover-panel__tagline">ss26 collection · milan</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Zara-style brand name — enormous, positioned bottom-right, bleeding off edge with difference blend */}
         <div className="video-hero__wordmark" aria-hidden="true">sarta</div>
 
         {/* Campaign info — bottom left */}
@@ -158,6 +244,35 @@ export function Home() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════
+          HOUSE MANIFESTO — Premium transitional divider
+      ═══════════════════════════════════════════════════════════════ */}
+      <section className="house-manifesto">
+        <div className="container manifesto__inner">
+          <div className="manifesto__line-glow" />
+          <div className="manifesto__top-row">
+            <span className="manifesto__serial">SARTA / SS26</span>
+            <span className="manifesto__location">MILAN ATELIER</span>
+          </div>
+          
+          <h2 className="display manifesto__heading">
+            A silent language of refined drapery, tactile fabrics, and architectural movement.
+          </h2>
+          
+          <p className="manifesto__paragraph">
+            Every garment in our limited collection is a physical canvas—designed to merge raw, cinematic expression with comfortable everyday luxury. From sequined slip gowns to heritage midnight tailoring, we build wardrobes for the in-between moments of life.
+          </p>
+
+          <div className="manifesto__bottom-row">
+            <span className="manifesto__coordinates">LAT. 45.464° N / LNG. 9.191° E</span>
+            <div className="manifesto__sound-badge">
+              <span className="sound-pulse-dot" />
+              <span>AMBIENT SOUNDSCAPE ON</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════
           CHAPTER BAND — Editorial divider before Tales
       ═══════════════════════════════════════════════════════════════ */}
       <div className="chapter-band" aria-hidden="true">
@@ -172,15 +287,27 @@ export function Home() {
       <section ref={heroRef} className="showcase-hero">
         {/* Giant parallax wordmark */}
         <div className="showcase-wordmark" aria-hidden="true">
-          {["s", "a", "r", "t", "a"].map((letter, idx) => (
-            <span
-              key={idx}
-              ref={(el) => { letterRefs.current[idx] = el; }}
-              className="showcase-wordmark__letter"
-            >
-              {letter}
-            </span>
-          ))}
+          {(["s", "a", "r", "t", "a"] as const).map((letter, idx) => {
+            // Each letter gets a HIGH-CONTRAST editorial image — must be bright/colorful
+            // to be visible as a letter-shaped window against the dark showcase bg
+            const letterImages = [
+              images.editorialWomanColorblockTeal,  // s — vivid teal/blue sky
+              images.editorialPantherPinkWater,      // a — hot pink / magenta
+              images.editorialCoutureLeafRunway,     // r — rich green couture
+              images.editorialRedVeilPortrait,       // t — vivid crimson red
+              images.editorialWomanStripedGown,      // a — multicolour stripes
+            ];
+            return (
+              <span
+                key={idx}
+                ref={(el) => { letterRefs.current[idx] = el; }}
+                className="showcase-wordmark__letter"
+                style={{ backgroundImage: `url(${letterImages[idx]})` }}
+              >
+                {letter}
+              </span>
+            );
+          })}
         </div>
 
         <div className="showcase-track">
