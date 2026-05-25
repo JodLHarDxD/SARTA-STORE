@@ -1,13 +1,14 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { dragGalleryItems } from "../data/products";
 import "./DragGallery.css";
 
-/** Palmer-inspired horizontal drag-to-explore gallery */
+/** Palmer-inspired horizontal drag-to-explore gallery with hover autoplay videos */
 export function DragGallery() {
   const trackRef = useRef<HTMLDivElement>(null);
   const isDragging = useRef(false);
   const startX = useRef(0);
   const scrollLeft = useRef(0);
+  const [hoveredTitle, setHoveredTitle] = useState<string | null>(null);
 
   useEffect(() => {
     const track = trackRef.current;
@@ -68,8 +69,25 @@ export function DragGallery() {
       </div>
       <div ref={trackRef} className="drag-gallery__track">
         {dragGalleryItems.map((item) => (
-          <article key={item.title} className="drag-gallery__card">
-            <img src={item.src} alt={item.title} loading="lazy" />
+          <article
+            key={item.title}
+            className="drag-gallery__card"
+            onMouseEnter={() => setHoveredTitle(item.title)}
+            onMouseLeave={() => setHoveredTitle(null)}
+          >
+            <div className="drag-gallery__media-wrap">
+              <img src={item.src} alt={item.title} loading="lazy" />
+              {item.video && (
+                <video
+                  src={item.video}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  style={{ opacity: hoveredTitle === item.title ? 1 : 0 }}
+                />
+              )}
+            </div>
             <div>
               <p className="eyebrow">{item.subtitle}</p>
               <h3>{item.title}</h3>

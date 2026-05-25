@@ -21,7 +21,12 @@ export function Shop() {
     let list = [...products];
 
     if (category !== "all") {
-      list = list.filter((p) => p.category === category);
+      if (category === "new") {
+        // Fix the empty "New In" section bug by returning all products tagged as "New"
+        list = list.filter((p) => p.category === "new" || p.tag === "New");
+      } else {
+        list = list.filter((p) => p.category === category);
+      }
     }
 
     if (query.trim()) {

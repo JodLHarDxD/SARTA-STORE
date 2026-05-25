@@ -508,32 +508,56 @@ export const heroSlides = [
 
 export const dragGalleryItems = [
   {
+    src: "/media/campaign_both.png",
+    video: "/media/campaign-curated-suits/videos/video-two-women-tailored-suits.mp4",
+    title: "Atelier Duo",
+    subtitle: "Campaign",
+  },
+  {
+    src: "/media/campaign_women.png",
+    video: "/media/campaign-curated-suits/videos/video-pink-suit-portrait.mp4",
+    title: "Straw Hat Tailoring",
+    subtitle: "Women",
+  },
+  {
+    src: "/media/campaign_men.png",
+    video: "/media/campaign-equestrian/videos/hero-secondary.mp4",
+    title: "Mediterranean Beach",
+    subtitle: "Men",
+  },
+  {
     src: "/media/campaign-equestrian/images/editorial-ornate-crown-cape.png",
+    video: "/media/campaign-equestrian/videos/lookbook-01.mp4",
     title: "Haute Couture",
     subtitle: "Editorial",
   },
   {
     src: "/media/campaign-equestrian/images/editorial-gold-jewelry.jpg",
+    video: "/media/campaign-equestrian/videos/editorial-01.mp4",
     title: "Gold Hour",
     subtitle: "Campaign",
   },
   {
     src: "/media/campaign-equestrian/images/editorial-white-sculptural.png",
+    video: "/media/campaign-equestrian/videos/lookbook-03.mp4",
     title: "White Architecture",
     subtitle: "Women",
   },
   {
     src: "/media/campaign-equestrian/images/editorial-silver-futuristic.png",
+    video: "/media/campaign-equestrian/videos/lookbook-04.mp4",
     title: "Future Luxury",
     subtitle: "New Season",
   },
   {
     src: "/media/campaign-equestrian/images/lifestyle-coat-metro.jpg",
+    video: "/media/campaign-equestrian/videos/lookbook-05.mp4",
     title: "City Motion",
     subtitle: "Lifestyle",
   },
   {
     src: "/products/women/dress-04.jpg",
+    video: "/media/campaign-equestrian/videos/lookbook-06.mp4",
     title: "Monogram",
     subtitle: "Women",
   },
