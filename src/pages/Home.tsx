@@ -63,29 +63,6 @@ const marquees = [
   "THE ARCHIVES",
 ];
 
-const steps = [
-  {
-    code: "01",
-    title: "Explore the Tales",
-    body: "Browse through SARTA's visual tales, detailing campaign cinema, mood boards, and boutique showroom atmospheres.",
-  },
-  {
-    code: "02",
-    title: "Select Your Artifact",
-    body: "Pick sizing and premium fabric variants with a clean, high-contrast bag drawer — minimal like design studios.",
-  },
-  {
-    code: "03",
-    title: "Tactile Cart",
-    body: "Review items in your bag with real-time feedback and plink sound ticks on every action.",
-  },
-  {
-    code: "04",
-    title: "Seamless Delivery",
-    body: "Fast architectural checkout flow built for instant mobile-first and high-street luxury shipping.",
-  },
-];
-
 export function Home() {
   const featured = products.slice(0, 8);
   const [activeTab, setActiveTab] = useState<"all" | "equestrian" | "suits" | "editorial">("all");
@@ -101,10 +78,9 @@ export function Home() {
 
     const handleMouseMove = (e: MouseEvent) => {
       const rect = hero.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5; // -0.5 to 0.5
-      const y = (e.clientY - rect.top) / rect.height - 0.5; // -0.5 to 0.5
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
 
-      // Parallax drift for cards
       cardRefs.current.forEach((card, idx) => {
         if (!card) return;
         const multiplierX = (idx + 1) * 32;
@@ -120,7 +96,6 @@ export function Home() {
         });
       });
 
-      // Parallax drift for Zara brand wordmark letters
       letterRefs.current.forEach((letter, idx) => {
         if (!letter) return;
         const multiplierX = (5 - idx) * 40;
@@ -142,22 +117,65 @@ export function Home() {
   }, []);
 
   const filteredLookbook = useMemo(() => {
-    if (activeTab === "all") return lookbookItems.slice(0, 16); // Limit for cinematic speed
+    if (activeTab === "all") return lookbookItems.slice(0, 16);
     return lookbookItems.filter((item) => item.collection === activeTab).slice(0, 12);
   }, [activeTab]);
 
   return (
     <div className="home page-enter">
-      {/* ─── MASTERPIECE EDITORIAL SHOWCASE HERO ─────────────────────────────────── */}
+
+      {/* ═══════════════════════════════════════════════════════════════
+          FULL-BLEED VIDEO HERO — ZARA-STYLE BRAND NAME
+      ═══════════════════════════════════════════════════════════════ */}
+      <section className="video-hero">
+        <video
+          src={videos.heroMain}
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="video-hero__bg"
+        />
+        <div className="video-hero__overlay" />
+
+        {/* Zara-style brand name — enormous, positioned bottom-right, bleeding off edge */}
+        <div className="video-hero__wordmark" aria-hidden="true">sarta</div>
+
+        {/* Campaign info — bottom left */}
+        <div className="video-hero__content">
+          <p className="video-hero__eyebrow">ss26 · equestrian cinema · milan</p>
+          <div className="video-hero__cta-row">
+            <Link to="/shop" className="btn btn--cream">Discover Collection</Link>
+            <Link to="/about" className="btn btn--ghost">Our World</Link>
+          </div>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="video-hero__scroll" aria-hidden="true">
+          <div className="video-hero__scroll-line" />
+          <span>scroll</span>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════
+          CHAPTER BAND — Editorial divider before Tales
+      ═══════════════════════════════════════════════════════════════ */}
+      <div className="chapter-band" aria-hidden="true">
+        <span className="chapter-band__bracket">[ tales ]</span>
+        <span className="chapter-band__label">three cinematic campaigns · one house</span>
+        <span className="chapter-band__bracket">[ tales ]</span>
+      </div>
+
+      {/* ═══════════════════════════════════════════════════════════════
+          KINETIC TALE FRAMES — Hover-expand editorial panels
+      ═══════════════════════════════════════════════════════════════ */}
       <section ref={heroRef} className="showcase-hero">
-        {/* Giant Zara-inspired wordmark with mix-blend-mode */}
+        {/* Giant parallax wordmark */}
         <div className="showcase-wordmark" aria-hidden="true">
           {["s", "a", "r", "t", "a"].map((letter, idx) => (
             <span
               key={idx}
-              ref={(el) => {
-                letterRefs.current[idx] = el;
-              }}
+              ref={(el) => { letterRefs.current[idx] = el; }}
               className="showcase-wordmark__letter"
             >
               {letter}
@@ -165,12 +183,10 @@ export function Home() {
           ))}
         </div>
 
-        {/* Floating kinetic cards */}
         <div className="showcase-track">
           {TALES.map((tale, index) => {
             const isHovered = hoveredTale === index;
             const isAnyHovered = hoveredTale !== null;
-            
             let cardClass = "kinetic-frame";
             if (isHovered) cardClass += " is-active";
             else if (isAnyHovered) cardClass += " is-dimmed";
@@ -178,70 +194,35 @@ export function Home() {
             return (
               <article
                 key={tale.code}
-                ref={(el) => {
-                  cardRefs.current[index] = el;
-                }}
+                ref={(el) => { cardRefs.current[index] = el; }}
                 className={cardClass}
-                onMouseEnter={() => {
-                  setHoveredTale(index);
-                  sartaAudio.tick(); // click feedback plink
-                }}
+                onMouseEnter={() => { setHoveredTale(index); sartaAudio.tick(); }}
                 onMouseLeave={() => setHoveredTale(null)}
                 data-cursor="view"
               >
-                {/* Dual-border luxury frames */}
                 <div className="kinetic-frame__border-outer" />
                 <div className="kinetic-frame__border-inner" />
-
-                {/* Background media elements */}
                 <div className="kinetic-frame__media">
-                  <img
-                    src={tale.image}
-                    alt={tale.title}
-                    className="kinetic-frame__img"
-                  />
-                  {/* Autoplay campaign video overlay on hover */}
+                  <img src={tale.image} alt={tale.title} className="kinetic-frame__img" />
                   <video
                     src={tale.video}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
+                    autoPlay muted loop playsInline
                     className={`kinetic-frame__video ${isHovered ? "is-visible" : ""}`}
                   />
                   <div className="kinetic-frame__overlay" />
                 </div>
-
-                {/* HUD Telemetry Coordinates (Indigo Laboratory style) */}
                 <div className="kinetic-frame__hud">
-                  <div className="hud-line">
-                    <span className="hud-label">COORD</span>
-                    <span className="hud-val">{tale.coords}</span>
-                  </div>
-                  <div className="hud-line">
-                    <span className="hud-label">ALT</span>
-                    <span className="hud-val">{tale.alt}</span>
-                  </div>
-                  <div className="hud-line">
-                    <span className="hud-label">PRES</span>
-                    <span className="hud-val">{tale.pressure}</span>
-                  </div>
-                  <div className="hud-line">
-                    <span className="hud-label">SYS_T</span>
-                    <span className="hud-val">{tale.temp}</span>
-                  </div>
-                  <div className="hud-grid-badge">
-                    <span>{tale.code}</span>
-                  </div>
+                  <div className="hud-line"><span className="hud-label">COORD</span><span className="hud-val">{tale.coords}</span></div>
+                  <div className="hud-line"><span className="hud-label">ALT</span><span className="hud-val">{tale.alt}</span></div>
+                  <div className="hud-line"><span className="hud-label">PRES</span><span className="hud-val">{tale.pressure}</span></div>
+                  <div className="hud-line"><span className="hud-label">SYS_T</span><span className="hud-val">{tale.temp}</span></div>
+                  <div className="hud-grid-badge"><span>{tale.code}</span></div>
                 </div>
-
-                {/* Card textual contents */}
                 <div className="kinetic-frame__content">
                   <div className="kinetic-frame__header">
                     <span className="kinetic-frame__code">{tale.code}</span>
                     <p className="kinetic-frame__eyebrow">{tale.subtitle}</p>
                   </div>
-                  
                   <div className="kinetic-frame__body">
                     <h1 className="display kinetic-frame__title">{tale.title}</h1>
                     <div className="kinetic-frame__expanded-content">
@@ -258,7 +239,9 @@ export function Home() {
         </div>
       </section>
 
-      {/* ─── BRAND PROLOGUE ──────────────────────────────────────────────── */}
+      {/* ═══════════════════════════════════════════════════════════════
+          BRAND PROLOGUE
+      ═══════════════════════════════════════════════════════════════ */}
       <section className="brand-prologue container">
         <div className="prologue-grid">
           <div className="prologue-left">
@@ -274,18 +257,44 @@ export function Home() {
               and structural geometry, we craft a shopping journey designed for visual sensory pleasure.
             </p>
             <div className="prologue-actions">
-              <Link to="/shop" className="btn btn--primary">
-                Shop Collection
-              </Link>
-              <Link to="/about" className="btn btn--ghost">
-                Our Philosophy
-              </Link>
+              <Link to="/shop" className="btn btn--primary">Shop Collection</Link>
+              <Link to="/about" className="btn btn--ghost">Our Philosophy</Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ─── DYNAMIC TYPOGRAPHY TAPE ─────────────────────────────────────── */}
+      {/* ═══════════════════════════════════════════════════════════════
+          EDITORIAL CHAPTER I — THE EQUESTRIAN
+          Indigo Laboratory–style full-bleed narrative section
+      ═══════════════════════════════════════════════════════════════ */}
+      <section className="editorial-chapter">
+        <div className="editorial-chapter__inner">
+          <div className="editorial-chapter__media">
+            <img
+              src={images.heroModelSequinHorse}
+              alt="The Equestrian — ss26 campaign"
+              className="editorial-chapter__img"
+            />
+          </div>
+          <div className="editorial-chapter__text">
+            <span className="editorial-chapter__number">[ tale i ]</span>
+            <p className="editorial-chapter__eyebrow">equestrian cinema · ss26</p>
+            <h2 className="editorial-chapter__title">The<br />Equestrian</h2>
+            <p className="editorial-chapter__desc">
+              Cinematic, raw landscapes where high tailoring meets equestrian freedom.
+              Sequined slip dresses and sharp linen outlines — fashion at full gallop.
+            </p>
+            <Link to="/shop?category=new" className="btn btn--cream editorial-chapter__cta">
+              Explore Chapter →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════
+          DYNAMIC TYPOGRAPHY TAPE
+      ═══════════════════════════════════════════════════════════════ */}
       <div className="marquee" aria-hidden="true">
         <div className="marquee__track">
           {[...marquees, ...marquees, ...marquees].map((label, i) => (
@@ -294,12 +303,43 @@ export function Home() {
         </div>
       </div>
 
-      {/* ─── INTERACTIVE EXPLORE RAIL ────────────────────────────────────── */}
+      {/* ═══════════════════════════════════════════════════════════════
+          EDITORIAL CHAPTER II — THE ATELIER (reversed layout)
+      ═══════════════════════════════════════════════════════════════ */}
+      <section className="editorial-chapter editorial-chapter--reverse">
+        <div className="editorial-chapter__inner">
+          <div className="editorial-chapter__text">
+            <span className="editorial-chapter__number">[ tale ii ]</span>
+            <p className="editorial-chapter__eyebrow">quiet suiting · 2026</p>
+            <h2 className="editorial-chapter__title">The<br />Atelier</h2>
+            <p className="editorial-chapter__desc">
+              A silent space for heritage tailoring. Double-breasted chalk-pinks
+              and structural midnight wools — built for modern everyday ritual.
+            </p>
+            <Link to="/shop?category=women" className="btn btn--cream editorial-chapter__cta">
+              Explore Chapter →
+            </Link>
+          </div>
+          <div className="editorial-chapter__media">
+            <img
+              src={images.curatedHeroWomanUrbanSuit}
+              alt="The Atelier — curated suits campaign"
+              className="editorial-chapter__img"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════
+          INTERACTIVE EXPLORE RAIL
+      ═══════════════════════════════════════════════════════════════ */}
       <div className="explore-rail-wrap" data-cursor="drag">
         <DragGallery />
       </div>
 
-      {/* ─── ASYMMETRICAL EDITORIAL ARCHIVE ───────────────────────────────── */}
+      {/* ═══════════════════════════════════════════════════════════════
+          ASYMMETRICAL EDITORIAL ARCHIVE
+      ═══════════════════════════════════════════════════════════════ */}
       <section className="lookbook-section">
         <div className="container lookbook-head">
           <p className="eyebrow">The Archives</p>
@@ -308,7 +348,6 @@ export function Home() {
             Explore our visual world — alternating layouts, dynamic video captures, campaign details, and minimal boutique showroom textures.
           </p>
         </div>
-
         <div className="container">
           <div className="lookbook-filters">
             {(["all", "equestrian", "suits", "editorial"] as const).map((tab) => (
@@ -316,17 +355,12 @@ export function Home() {
                 key={tab}
                 type="button"
                 className={`lookbook-filter-btn ${activeTab === tab ? "is-active" : ""}`}
-                onClick={() => {
-                  setActiveTab(tab);
-                  sartaAudio.tick(); // click feedback plink
-                }}
+                onClick={() => { setActiveTab(tab); sartaAudio.tick(); }}
               >
                 {tab === "all" ? "All Works" : tab === "suits" ? "Suits Curated" : tab === "editorial" ? "Editorial Classics" : tab}
               </button>
             ))}
           </div>
-
-          {/* Alternating Asymmetrical Lookbook Grid */}
           <div className="lookbook-grid">
             {filteredLookbook.map((item, index) => (
               <article
@@ -336,14 +370,7 @@ export function Home() {
               >
                 <div className="lookbook-media-wrap">
                   {item.type === "video" ? (
-                    <video
-                      src={item.src}
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      className="lookbook-video"
-                    />
+                    <video src={item.src} autoPlay muted loop playsInline className="lookbook-video" />
                   ) : (
                     <img src={item.src} alt={item.title} className="lookbook-img" loading="lazy" />
                   )}
@@ -361,16 +388,16 @@ export function Home() {
         </div>
       </section>
 
-      {/* ─── NEW ARRIVALS EDIT ────────────────────────────────────────────── */}
+      {/* ═══════════════════════════════════════════════════════════════
+          NEW ARRIVALS EDIT
+      ═══════════════════════════════════════════════════════════════ */}
       <section className="featured container">
         <div className="featured__head">
           <div>
             <p className="eyebrow">Shop the edit</p>
             <h2 className="display featured__title">New arrivals</h2>
           </div>
-          <Link to="/shop" className="featured__link">
-            View all
-          </Link>
+          <Link to="/shop" className="featured__link">View all</Link>
         </div>
         <div className="featured__grid">
           {featured.map((product) => (
@@ -381,30 +408,13 @@ export function Home() {
         </div>
       </section>
 
-      {/* ─── PROCESS STEPS ────────────────────────────────────────────────── */}
-      <section className="steps">
-        <div className="container">
-          <p className="eyebrow">Our System</p>
-          <h2 className="display steps__title">From browse to doorstep</h2>
-        </div>
-        <div className="steps__grid container">
-          {steps.map((step) => (
-            <article key={step.code} className="steps__card">
-              <span className="steps__code">{step.code}</span>
-              <h3>{step.title}</h3>
-              <p>{step.body}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      {/* ─── EDITORIAL BANNER ────────────────────────────────────────────── */}
+      {/* ═══════════════════════════════════════════════════════════════
+          EDITORIAL CLOSING BANNER
+      ═══════════════════════════════════════════════════════════════ */}
       <section className="cta-banner">
         <div className="container cta-banner__inner">
           <h2 className="display">Made to be worn. Or judged. Or both.</h2>
-          <Link to="/shop" className="btn btn--cream">
-            Explore All Catalog
-          </Link>
+          <Link to="/shop" className="btn btn--cream">Explore All Catalog</Link>
         </div>
       </section>
     </div>
