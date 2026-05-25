@@ -43,20 +43,22 @@ export function Preloader({ onComplete }: PreloaderProps) {
     const counter = counterRef.current;
     if (!overlay || !imagesLayer || !wordmark || !counter) return;
 
-    const imgs = gsap.utils.toArray<HTMLElement>(
-      imagesLayer.querySelectorAll(".preloader__image"),
+    const imgEls = Array.from(
+      imagesLayer.querySelectorAll<HTMLImageElement>(".preloader__image"),
     );
+    const imgs = imgEls as HTMLElement[];
 
     // Disable scrolling during load
     document.documentElement.style.overflow = "hidden";
     window.scrollTo(0, 0);
 
-    // Initial states
-    gsap.set(imgs, { scale: 0, rotate: 0 });
+    // Initial states — GPU compositor layers created NOW, before decode wait
+    gsap.set(imgs, { scale: 0, rotate: 0, willChange: "transform" });
     gsap.set(wordmark, { yPercent: 110, opacity: 0 });
     gsap.set(counter, { opacity: 1, yPercent: 0 });
 
     const intro = gsap.timeline({
+      paused: true,
       defaults: { duration: 0.75, ease: "power3.out", force3D: true },
       onStart: () => {
         imagesLayer.classList.remove("is-hidden");
@@ -77,7 +79,7 @@ export function Preloader({ onComplete }: PreloaderProps) {
       );
 
     const main = gsap.timeline({
-      delay: 0.2,
+      paused: true,
       defaults: { force3D: true },
     });
 
@@ -108,7 +110,22 @@ export function Preloader({ onComplete }: PreloaderProps) {
         }
       }, "<92%");
 
+    // Wait for ALL images to fully decode + GPU texture upload before animating.
+    // This is why fan-in was laggy: decode was racing the animation.
+    // fan-out was smooth because images were already on GPU.
+    let cancelled = false;
+    Promise.all(
+      imgEls.map((img) =>
+        img.complete
+          ? Promise.resolve()
+          : img.decode().catch(() => {}),
+      ),
+    ).then(() => {
+      if (!cancelled) main.play();
+    });
+
     return () => {
+      cancelled = true;
       main.kill();
       intro.kill();
       document.documentElement.style.overflow = "";
@@ -192,7 +209,8 @@ export function Preloader({ onComplete }: PreloaderProps) {
               alt=""
               className="preloader__image"
               loading="eager"
-              decoding="async"
+              decoding="sync"
+              fetchPriority="high"
               style={{ zIndex: index }}
             />
           ))}
