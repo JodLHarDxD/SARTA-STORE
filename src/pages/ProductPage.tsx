@@ -33,9 +33,33 @@ export function ProductPage() {
   };
 
   return (
-    <div className="pdp page page-enter">
-      <div className="container pdp__crumb">
-        <Link to="/shop">Shop</Link>
+    <div className="pdp page page-enter" style={{ backgroundColor: "#ffffff" }}>
+      {/* ═══════════════════════════════════════════════════════════════
+          ZARA-STYLE LANDSCAPE POSTER HERO
+      ═══════════════════════════════════════════════════════════════ */}
+      <section className="zara-poster-hero">
+        <div className="zara-poster-hero__frame">
+          <img src={product.image} alt={product.name} className="zara-poster-hero__img" />
+          <div className="zara-poster-hero__logo">Sarta</div>
+        </div>
+
+        <div className="zara-poster-hero__label-box">
+          <h2 className="zara-poster-hero__label-title">{product.category}</h2>
+          <p className="zara-poster-hero__label-subtitle">{product.tag || "LIMITED COLLECTION / DESIGN SERIES"}</p>
+        </div>
+
+        <div className="zara-poster-hero__sidebar">
+          <div className="zara-poster-hero__sidebar-inner">
+            <span className="zara-poster-hero__sidebar-link">BAG</span>
+            <span className="zara-poster-hero__sidebar-link">LOG IN</span>
+            <span className="zara-poster-hero__sidebar-link">HELP</span>
+          </div>
+          <div className="zara-poster-hero__sidebar-arrow">→</div>
+        </div>
+      </section>
+
+      <div className="container pdp__crumb" style={{ paddingTop: '80px', color: "#000000" }}>
+        <Link to="/shop" style={{ color: "#000000" }}>Shop</Link>
         <span>/</span>
         <span>{product.name}</span>
       </div>

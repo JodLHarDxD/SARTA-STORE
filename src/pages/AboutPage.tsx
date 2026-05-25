@@ -4,22 +4,28 @@ import "./AboutPage.css";
 
 export function AboutPage() {
   return (
-    <div className="about page page-enter">
-      {/* ─── ABOUT HERO ──────────────────────────────────────────────────── */}
-      <section className="about-hero">
-        <div className="container">
-          <p className="eyebrow">The Atelier Story</p>
-          <h1 className="display about-hero__title">
-            poetry in the <br />living materials.
-          </h1>
+    <div className="about page page-enter" style={{ backgroundColor: "#ffffff" }}>
+      {/* ═══════════════════════════════════════════════════════════════
+          ZARA-STYLE LANDSCAPE POSTER HERO
+      ═══════════════════════════════════════════════════════════════ */}
+      <section className="zara-poster-hero">
+        <div className="zara-poster-hero__frame">
+          <img src="/media/campaign_both.png" alt="SARTA Atelier Story" className="zara-poster-hero__img" />
+          <div className="zara-poster-hero__logo">Sarta</div>
         </div>
-        <div className="about-hero__banner">
-          <img
-            src={images.curatedHeroWomanUrbanSuit}
-            alt="SARTA suiting design"
-            className="about-hero__img"
-          />
-          <div className="about-hero__overlay" />
+
+        <div className="zara-poster-hero__label-box">
+          <h2 className="zara-poster-hero__label-title">THE ATELIER</h2>
+          <p className="zara-poster-hero__label-subtitle">POETRY IN LIVING MATERIALS / SS26</p>
+        </div>
+
+        <div className="zara-poster-hero__sidebar">
+          <div className="zara-poster-hero__sidebar-inner">
+            <span className="zara-poster-hero__sidebar-link">BAG [0]</span>
+            <span className="zara-poster-hero__sidebar-link">LOG IN</span>
+            <span className="zara-poster-hero__sidebar-link">HELP</span>
+          </div>
+          <div className="zara-poster-hero__sidebar-arrow">→</div>
         </div>
       </section>
 

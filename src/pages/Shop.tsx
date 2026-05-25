@@ -50,17 +50,42 @@ export function Shop() {
     return list;
   }, [category, sort, query]);
 
+  // Choose the dynamic poster image based on category
+  const posterImg = 
+    category === "women" ? "/media/campaign_women.png" :
+    category === "men" ? "/media/campaign_men.png" :
+    "/media/campaign_both.png";
+
+  const labelSub = 
+    category === "women" ? "THE SILENT SUITING / CROP SHORTS SS26" :
+    category === "men" ? "EQUESTRIAN CINEMA / MILAN BEACH SS26" :
+    "ATELIER SHOWCASE / EDITORIAL ESSENTIALS";
+
   return (
-    <div className="shop page page-enter">
-      <div className="shop-hero">
-        <div className="container">
-          <p className="eyebrow">Shop all</p>
-          <h1 className="display shop-hero__title">
-            {categories.find((c) => c.id === category)?.label ?? "All"} ·{" "}
-            {filtered.length} pieces
-          </h1>
+    <div className="shop page page-enter" style={{ backgroundColor: "#ffffff" }}>
+      {/* ═══════════════════════════════════════════════════════════════
+          ZARA-STYLE LANDSCAPE POSTER HERO
+      ═══════════════════════════════════════════════════════════════ */}
+      <section className="zara-poster-hero">
+        <div className="zara-poster-hero__frame">
+          <img src={posterImg} alt="SARTA Campaign" className="zara-poster-hero__img" />
+          <div className="zara-poster-hero__logo">Sarta</div>
         </div>
-      </div>
+
+        <div className="zara-poster-hero__label-box">
+          <h2 className="zara-poster-hero__label-title">THE EDIT</h2>
+          <p className="zara-poster-hero__label-subtitle">{labelSub}</p>
+        </div>
+
+        <div className="zara-poster-hero__sidebar">
+          <div className="zara-poster-hero__sidebar-inner">
+            <span className="zara-poster-hero__sidebar-link">BAG [{filtered.length}]</span>
+            <span className="zara-poster-hero__sidebar-link">LOG IN</span>
+            <span className="zara-poster-hero__sidebar-link">HELP</span>
+          </div>
+          <div className="zara-poster-hero__sidebar-arrow">→</div>
+        </div>
+      </section>
 
       <div className="container shop-layout">
         <aside className="shop-filters">

@@ -248,3 +248,191 @@ button {
   }
 }
 
+/* ═══════════════════════════════════════════════════════════════════
+   ZARA-STYLE LANDSCAPE POSTER HERO
+   Replicates the exact layout of the Zara landing page:
+   - Centered landscape poster image container.
+   - Enormous SARTA wordmark overlay with tightly overlapping serif typography.
+   - Elegant right-side white/linen sidebar panel overlay.
+   - Refined typography and absolute minimal high-street layout.
+═══════════════════════════════════════════════════════════════════ */
+.zara-poster-hero {
+  position: relative;
+  width: 100vw;
+  height: 95vh;
+  background-color: #ffffff; /* Zara's signature clean pure white backdrop */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 4vw;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(17, 17, 17, 0.08);
+}
+
+.zara-poster-hero__frame {
+  position: relative;
+  width: 82vw; /* Framed between left margin and the right sidebar */
+  height: 78vh;
+  overflow: hidden;
+  background-color: #f0f0f0;
+}
+
+.zara-poster-hero__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%; /* Matches crop focal points perfectly */
+  transition: transform 1.6s var(--ease-out);
+}
+
+.zara-poster-hero:hover .zara-poster-hero__img {
+  transform: scale(1.025);
+}
+
+/* Enormous overlapping logo placed at the bottom-right of the image,
+   extending onto the white sidebar panel for beautiful visual tension */
+.zara-poster-hero__logo {
+  position: absolute;
+  right: -6vw; /* Extends/overlaps onto the sidebar panel */
+  bottom: -4vh;
+  font-family: var(--serif);
+  font-size: clamp(8rem, 24vw, 36rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  color: #000000; /* Pure high-contrast black ZARA logo look */
+  letter-spacing: -0.09em; /* Letters touch and overlap beautifully */
+  line-height: 0.76;
+  pointer-events: none;
+  z-index: 10;
+  user-select: none;
+  mix-blend-mode: normal;
+}
+
+/* White sidebar panel on the right side of the screen */
+.zara-poster-hero__sidebar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 14vw; /* Perfect right-aligned container */
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
+  border-left: 1px solid rgba(17, 17, 17, 0.06);
+}
+
+.zara-poster-hero__sidebar-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #000000;
+  margin-top: -40px;
+}
+
+.zara-poster-hero__sidebar-link {
+  color: #000000;
+  transition: opacity 0.3s;
+}
+
+.zara-poster-hero__sidebar-link:hover {
+  opacity: 0.6;
+}
+
+.zara-poster-hero__sidebar-arrow {
+  position: absolute;
+  bottom: 6vh;
+  right: 5vw;
+  font-size: 20px;
+  color: #000000;
+  opacity: 0.65;
+  transition: transform 0.4s var(--ease-out);
+}
+
+.zara-poster-hero:hover .zara-poster-hero__sidebar-arrow {
+  transform: translateX(6px);
+}
+
+/* Elegant left details on the poster image (e.g. THE ITEM / THE CAMPAIGN label) */
+.zara-poster-hero__label-box {
+  position: absolute;
+  top: 6vh;
+  left: 4vw;
+  z-index: 8;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.zara-poster-hero__label-title {
+  font-family: var(--sans);
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 900;
+  line-height: 0.9;
+  text-transform: uppercase;
+  color: #d8232a; /* Zara's signature bold red label color */
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.zara-poster-hero__label-subtitle {
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #000000;
+  max-width: 24ch;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .zara-poster-hero {
+    height: 75vh;
+    padding-left: 2vw;
+  }
+  .zara-poster-hero__frame {
+    width: 80vw;
+    height: 62vh;
+  }
+  .zara-poster-hero__sidebar {
+    width: 18vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .zara-poster-hero {
+    height: auto;
+    padding: 100px 16px 40px;
+    flex-direction: column;
+    background-color: #ffffff;
+  }
+  .zara-poster-hero__frame {
+    width: 100%;
+    height: 48vh;
+  }
+  .zara-poster-hero__sidebar {
+    display: none; /* Hide sidebar on mobile to keep layout clean */
+  }
+  .zara-poster-hero__logo {
+    right: -2vw;
+    bottom: -2vh;
+    font-size: clamp(6rem, 18vw, 14rem);
+  }
+  .zara-poster-hero__label-box {
+    top: 120px;
+    left: 24px;
+  }
+}
+
+
